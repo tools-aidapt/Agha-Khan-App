@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { AGENDA } from '../agenda.js';
 import { SESSIONS } from '../data.js';
 import { BrandMark, AgendaRow } from './ScreenWelcome.jsx';
+import { WhatsAppPill } from '../components/WhatsAppPill.jsx';
 
 // ───────── Confetti + success ─────────
 function Confetti({ count = 64 }) {
@@ -145,8 +146,10 @@ const SPEAKER_BIOS = {
       "Alongside product work, Kayuyu contributes to Africa's technology ecosystem through mentorship — supporting young women in tech via Global Give Back Circle / Mastercard Foundation's HER Lab, Moringa School, She Codes Africa, and Young Techiez. She also collaborates with clinicians and researchers on the practical and responsible application of AI within healthcare systems in emerging markets.",
     ],
     links: [
-      { label: 'LinkedIn', value: 'linkedin.com/in/kayuyumwaura', href: 'https://www.linkedin.com/in/kayuyumwaura/' },
+      { label: 'LinkedIn',   value: 'linkedin.com/in/kayuyumwaura',  href: 'https://www.linkedin.com/in/kayuyumwaura/' },
+      { label: 'Slide deck', value: 'The ABCs of AI (PDF)',          href: '/decks/abcs-of-ai-kayuyu.pdf' },
     ],
+    slideDeck: { title: 'The ABCs of AI', url: '/decks/abcs-of-ai-kayuyu.pdf' },
   },
   'Reena Gore': {
     photo: reenaPhoto,
@@ -197,6 +200,7 @@ function getSpeakers() {
       company: bio?.company || null,
       links: bio?.links || null,
       photo: bio?.photo || null,
+      slideDeck: bio?.slideDeck || null,
     });
   });
   return speakers.map((s, i) => ({ ...s, tone: tones[i % tones.length] }));
@@ -422,6 +426,55 @@ function ClassDetailsSheet({ open, onClose }) {
             </div>
           </div>
         ))}
+      </div>
+    </Sheet>
+  );
+}
+
+function SlideDecksSheet({ open, onClose }) {
+  const speakers = getSpeakers();
+  return (
+    <Sheet open={open} onClose={onClose} eyebrow="Reference · Slide decks" title={<>The day in <em>slides.</em></>}>
+      <p style={{ fontSize: 14, color: 'var(--ink-2)', margin: '4px 0 18px', lineHeight: 1.55 }}>
+        Decks appear here as speakers share them. Tap any available deck to open the PDF.
+      </p>
+      <div className="deck-list">
+        {speakers.map((s) => {
+          const ready = !!s.slideDeck?.url;
+          const RowTag = ready ? 'a' : 'div';
+          const rowProps = ready
+            ? { href: s.slideDeck.url, target: '_blank', rel: 'noopener noreferrer' }
+            : {};
+          return (
+            <RowTag
+              key={s.name}
+              className={"deck-row" + (ready ? '' : ' is-pending')}
+              {...rowProps}
+            >
+              <div className="av" data-tone={s.tone}>
+                {s.photo ? <img src={s.photo} alt="" /> : initialsOf(s.name)}
+              </div>
+              <div className="body">
+                <div className="speaker">{s.name}</div>
+                <div className="title">
+                  {ready ? s.slideDeck.title : 'Deck coming soon'}
+                </div>
+              </div>
+              <span className="action" aria-hidden="true">
+                {ready ? (
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                    <path d="M3 9 L9 3 M4 3 L9 3 L9 8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                ) : (
+                  <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+                    <rect x="3" y="6.5" width="8" height="6" rx="1" stroke="currentColor" strokeWidth="1.4"/>
+                    <path d="M5 6.5 V4.5 a2 2 0 0 1 4 0 V6.5" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round"/>
+                  </svg>
+                )}
+              </span>
+            </RowTag>
+          );
+        })}
       </div>
     </Sheet>
   );
@@ -654,17 +707,19 @@ function ClassCard({ onOpen }) {
   );
 }
 
-function SlideDecksCard() {
+function SlideDecksCard({ onOpen }) {
+  const ready = getSpeakers().filter((s) => s.slideDeck?.url).length;
+  const total = getSpeakers().length;
   return (
-    <article className="hcard is-locked">
+    <article className="hcard" onClick={onOpen}>
       <div className="hc-head">
         <span className="hc-num">07 · Reference</span>
-        <span className="hc-pill is-locked">○ Friday 6 PM</span>
+        <span className="hc-pill">{ready} of {total} ready</span>
       </div>
       <h3>Slide decks.</h3>
-      <p className="lead">All five speaker decks land here on Friday evening. We'll email you the moment they're ready.</p>
+      <p className="lead">Every speaker's deck lands here as they share them. Tap to browse what's available now.</p>
       <div className="hc-foot">
-        <span className="hc-link is-muted">Notify me when live</span>
+        <span className="hc-link">Browse decks</span>
         <CardArrow />
       </div>
     </article>
@@ -692,26 +747,38 @@ function SurveyCard() {
 }
 
 // ───────── Hub Screen ─────────
+function formatNairobiTime() {
+  return new Date().toLocaleTimeString('en-US', {
+    timeZone: 'Africa/Nairobi',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  });
+}
+
 export function SessionsScreen({ data }) {
   const [loading, setLoading] = useState(true);
-  const [sheet, setSheet] = useState(null); // 'speakers' | 'class' | 'agenda' | null
+  const [sheet, setSheet] = useState(null); // 'speakers' | 'class' | 'agenda' | 'decks' | null
+  const [nairobiTime, setNairobiTime] = useState(formatNairobiTime);
+
   useEffect(() => {
     const t = setTimeout(() => setLoading(false), 1100);
     return () => clearTimeout(t);
   }, []);
 
+  useEffect(() => {
+    const tick = setInterval(() => setNairobiTime(formatNairobiTime()), 30 * 1000);
+    return () => clearInterval(tick);
+  }, []);
+
   const firstName = (data.name || '').trim().split(' ')[0] || 'there';
-  const initials = (data.name || '?').split(' ').filter(Boolean).slice(0, 2)
-    .map((s) => s[0].toUpperCase()).join('');
 
   return (
     <React.Fragment>
       <div className="hub-hero screen-enter">
         <div className="topbar">
           <BrandMark />
-          <div className="greet" style={{ margin: 0 }}>
-            <div className="avatar">{initials}</div>
-          </div>
+          <WhatsAppPill />
         </div>
         <div className="eyebrow" style={{ marginTop: 14 }}>Welcome, {firstName}</div>
         <h1>Your day, <em>in order.</em></h1>
@@ -724,7 +791,7 @@ export function SessionsScreen({ data }) {
         <HubSkeleton />
       ) : (
         <div className="hub stagger">
-          <Divider label="Right now · 10:42 AM" isNow />
+          <Divider label={`Right now · ${nairobiTime}`} isNow />
           <NowCard onOpen={() => setSheet('agenda')} />
 
           <Divider label="Before talks start" />
@@ -739,7 +806,7 @@ export function SessionsScreen({ data }) {
           <ClassCard onOpen={() => setSheet('class')} />
 
           <Divider label="Later this week" />
-          <SlideDecksCard />
+          <SlideDecksCard onOpen={() => setSheet('decks')} />
           <SurveyCard />
         </div>
       )}
@@ -747,6 +814,7 @@ export function SessionsScreen({ data }) {
       <SpeakersSheet open={sheet === 'speakers'} onClose={() => setSheet(null)} />
       <ClassDetailsSheet open={sheet === 'class'} onClose={() => setSheet(null)} />
       <AgendaSheet open={sheet === 'agenda'} onClose={() => setSheet(null)} />
+      <SlideDecksSheet open={sheet === 'decks'} onClose={() => setSheet(null)} />
     </React.Fragment>
   );
 }

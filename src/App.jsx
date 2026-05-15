@@ -67,6 +67,7 @@ export default function App() {
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(enriched)); } catch { /* storage blocked */ }
     const payload = {
       ...enriched,
+      website: data.website?.trim() ? data.website.trim() : null,
       phoneFull: `${dialCode} ${(data.phone || '').trim()}`.trim(),
       submittedAt: new Date().toISOString(),
       event: EVENT_ID,

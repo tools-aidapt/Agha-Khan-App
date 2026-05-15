@@ -1,5 +1,6 @@
 import React from 'react';
 import { AGENDA, EVENT_META } from '../agenda.js';
+import { WhatsAppPill } from '../components/WhatsAppPill.jsx';
 // Served from /public — same file is the favicon + share image
 const ismailiCivicLogo = '/ismaili-civic-kenya.png';
 
@@ -39,9 +40,7 @@ export function WelcomeScreen({ onBegin }) {
     <div className="screen screen-enter" style={{ paddingTop: 22 }}>
       <div className="topbar">
         <BrandMark />
-        <span className="eyebrow" style={{ background: 'rgba(255,255,255,0.5)', padding: '6px 10px', borderRadius: 99, border: '1px solid var(--line)' }}>
-          LIVE · Nairobi
-        </span>
+        <WhatsAppPill />
       </div>
 
       {/* Decorative geometry */}
