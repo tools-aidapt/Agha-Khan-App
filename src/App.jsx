@@ -20,7 +20,7 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
 }/*EDITMODE-END*/;
 
 const STORAGE_KEY = 'aidapt-onboarding-v1';
-const WEBHOOK_URL = 'https://aidapt.app.n8n.cloud/webhook-test/38c67af1-b398-4997-b342-f90b2285b8ed';
+const WEBHOOK_URL = 'https://aidapt.app.n8n.cloud/webhook/38c67af1-b398-4997-b342-f90b2285b8ed';
 const EVENT_ID = 'AI Unpacked · Nairobi 2026';
 
 function loadStoredUser() {

@@ -105,6 +105,7 @@ function CardArrow() {
 // ───────── Speaker photos ─────────
 import hiteshPhoto from '../assets/speakers/hitesh-mahajan.jpg';
 import kayuyuPhoto from '../assets/speakers/kayuyu-mwaura.jpg';
+import reenaPhoto from '../assets/speakers/reena-goore.jpg';
 
 // ───────── Speaker bios ─────────
 const SPEAKER_BIOS = {
@@ -146,6 +147,10 @@ const SPEAKER_BIOS = {
     links: [
       { label: 'LinkedIn', value: 'linkedin.com/in/kayuyumwaura', href: 'https://www.linkedin.com/in/kayuyumwaura/' },
     ],
+  },
+  'Reena Goore': {
+    photo: reenaPhoto,
+    // tagline, location, expertise, bio, links — fill in when available
   },
   // Other speakers' full bios coming — for now we'll show their talk info only
 };
@@ -488,9 +493,9 @@ function ShareCard() {
         <span className="hc-num">04 · Share the moment</span>
         <span className="hc-pill is-live">● Streaming</span>
       </div>
-      <h3>Watch with family &amp; friends.</h3>
+      <h3>Share this YouTube Live with your family &amp; friends.</h3>
       <p className="lead">
-        Anyone who couldn't make it to Nairobi can watch every keynote live on YouTube. Send them the link.
+        Every keynote streams live to YouTube — send the link to anyone who couldn't make it to Nairobi.
       </p>
       <div className="share-link-chip">
         <span className="yt-glyph" aria-hidden="true">
