@@ -1,0 +1,162 @@
+/* =========================================================
+   AI Unpacked — Aga Khan Foundation seminar onboarding
+   Warm editorial premium + brand blue/red accents
+   ========================================================= */
+
+:root {
+  --cream:        #f0f0f0;
+  --cream-deep:   #e4e4e4;
+  --cream-edge:   #d4d4d4;
+  --paper:        #fffefb;
+
+  --ink:          #1a1410;
+  --ink-2:        #3b342d;
+  --ink-3:        #6b6258;
+  --ink-4:        #a59a8a;
+
+  --blue:         #0b66c2;
+  --blue-deep:    #084d94;
+  --blue-soft:    #c5dbf3;
+  --blue-tint:    #e7f0fa;
+
+  --red:          #d33c1f;
+  --red-deep:     #a82c12;
+  --red-soft:     #f7d3c9;
+  --red-tint:     #fbeae4;
+
+  --line:         rgba(26, 20, 16, 0.10);
+  --line-strong:  rgba(26, 20, 16, 0.18);
+
+  --shadow-card:  0 1px 0 rgba(255,255,255,0.6) inset,
+                  0 1px 2px rgba(26,20,16,0.04),
+                  0 8px 24px -8px rgba(26,20,16,0.08);
+  --shadow-lift:  0 1px 0 rgba(255,255,255,0.8) inset,
+                  0 2px 4px rgba(26,20,16,0.04),
+                  0 20px 40px -16px rgba(26,20,16,0.18);
+
+  --serif: "Instrument Serif", "Cormorant Garamond", "Times New Roman", serif;
+  --sans:  "Geist", ui-sans-serif, system-ui, -apple-system, "Helvetica Neue", sans-serif;
+  --mono:  "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --radius-card: 22px;
+  --radius-input: 14px;
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+/* subtle paper grain */
+body::before {
+  content: "";
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+  background-image:
+    radial-gradient(circle at 25% 30%, rgba(211,60,31,0.04), transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(11,102,194,0.04), transparent 55%);
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+  min-height: 100dvh;
+}
+
+/* ───── Screen container ───── */
+.app-shell {
+  min-height: 100dvh;
+  max-width: 480px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+@media (min-width: 720px) {
+  .app-shell.is-sessions { max-width: 1180px; }
+}
+
+.screen {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 24px 32px;
+  position: relative;
+}
+
+/* ───── Type ───── */
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.eyebrow::before {
+  content: "";
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--red);
+}
+
+.display {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(44px, 11vw, 64px);
+  line-height: 0.96;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0;
+}
+.display em {
+  font-style: italic;
+  color: var(--blue);
+  font-weight: 400;
+}
+
+.h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(32px, 8vw, 44px);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+
+.lede {
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--ink-2);
+  margin: 0;
+  max-width: 38ch;
+  text-wrap: pretty;
+}
+
+.label-sm {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--ink-3);
+}

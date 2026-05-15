@@ -1,0 +1,300 @@
+/* ===== Welcome agenda timeline ===== */
+
+/* Organiser credit (Ismaili Civic Kenya) — sits between event facts and agenda */
+.organiser {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 28px;
+  padding: 20px 16px;
+  background: var(--cream);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+.organiser-eyebrow {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.organiser-logo {
+  display: block;
+  height: 96px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* Compact event facts strip on welcome */
+.event-facts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-top: 22px;
+}
+.event-facts .fact {
+  background: var(--cream);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.event-facts .fact .k {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+}
+.event-facts .fact .v {
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--ink);
+  font-weight: 500;
+}
+.event-facts .fact.span2 {
+  grid-column: span 2;
+}
+
+/* Agenda section */
+.agenda {
+  margin-top: 28px;
+  position: relative;
+  z-index: 2;
+}
+.agenda-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+.agenda-head h3 {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  margin: 0;
+  line-height: 1;
+}
+.agenda-head h3 em {
+  font-style: italic;
+  color: var(--blue);
+}
+.agenda-head .count {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.agenda-list {
+  position: relative;
+  padding-left: 96px;
+}
+/* Connecting line */
+.agenda-list::before {
+  content: "";
+  position: absolute;
+  left: 76px;
+  top: 14px;
+  bottom: 14px;
+  width: 1px;
+  background: var(--line);
+}
+
+.ag-row {
+  position: relative;
+  padding: 14px 0 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  border-bottom: 1px dashed var(--line);
+}
+.ag-row:last-child { border-bottom: 0; }
+
+.ag-row .time {
+  position: absolute;
+  left: -96px;
+  top: 16px;
+  width: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ink-2);
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+.ag-row .time .ampm {
+  font-size: 8.5px;
+  color: var(--ink-4);
+  letter-spacing: 0.16em;
+  margin-top: 2px;
+}
+
+/* Dot on the timeline */
+.ag-row::before {
+  content: "";
+  position: absolute;
+  left: -24px;
+  top: 20px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--cream);
+  border: 1.5px solid var(--ink-4);
+  box-shadow: 0 0 0 4px var(--cream);
+  z-index: 1;
+}
+.ag-row[data-kind="keynote"]::before {
+  background: var(--blue);
+  border-color: var(--blue);
+}
+.ag-row[data-kind="fireside"]::before {
+  background: var(--red);
+  border-color: var(--red);
+}
+.ag-row[data-kind="talk"]::before {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.ag-row .body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.ag-row .title {
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+  line-height: 1.25;
+}
+.ag-row[data-kind="keynote"] .title,
+.ag-row[data-kind="fireside"] .title {
+  font-family: var(--serif);
+  font-size: 21px;
+  font-weight: 400;
+  line-height: 1.05;
+  margin: 2px 0 2px;
+  letter-spacing: -0.01em;
+}
+.ag-row .meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--ink-3);
+  flex-wrap: wrap;
+}
+.ag-row .meta .speaker {
+  font-weight: 500;
+  color: var(--ink-2);
+}
+.ag-row .meta .tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 7px;
+  border-radius: 99px;
+  border: 1px solid var(--line);
+  background: var(--cream-deep);
+  color: var(--ink-3);
+}
+.ag-row[data-kind="keynote"] .meta .tag {
+  background: var(--blue-tint);
+  border-color: rgba(11,102,194,0.2);
+  color: var(--blue-deep);
+}
+.ag-row[data-kind="fireside"] .meta .tag {
+  background: var(--red-tint);
+  border-color: rgba(211,60,31,0.2);
+  color: var(--red-deep);
+}
+.ag-row[data-kind="moment"] .title {
+  color: var(--ink-3);
+  font-weight: 400;
+}
+
+/* Compact welcome top — drop the marginTop hack from earlier */
+.welcome-hero {
+  margin-top: 26px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Pin the decorative art to right; smaller on welcome */
+.welcome-art-compact {
+  position: absolute;
+  right: -40px;
+  top: 70px;
+  width: 200px;
+  height: 200px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.85;
+}
+.welcome-art-compact .ring { position: absolute; border-radius: 50%; border: 1px solid var(--line); }
+.welcome-art-compact .r1 { inset: 0; }
+.welcome-art-compact .r2 { inset: 28px; border-color: var(--line-strong); }
+.welcome-art-compact .r3 { inset: 56px; }
+.welcome-art-compact .dot {
+  position: absolute;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--red);
+  top: 22%; right: 22%;
+  box-shadow: 0 0 0 5px rgba(211,60,31,0.12);
+  animation: pulse 2.6s ease-in-out infinite;
+}
+.welcome-art-compact .arrow-box {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) rotate(-8deg);
+  width: 64px; height: 64px;
+  background: var(--blue);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 14px 28px -8px rgba(11,102,194,0.4);
+}
+
+/* MC line */
+.mc-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  font-size: 12.5px;
+  color: var(--ink-3);
+}
+.mc-line .label {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+}
+.mc-line .name {
+  font-weight: 500;
+  color: var(--ink-2);
+}
