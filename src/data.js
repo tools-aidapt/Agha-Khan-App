@@ -28,7 +28,7 @@ export const SESSIONS = [
     time: "11:52 — 12:20 PM",
     title: "Customers, in their own words.",
     blurb: "Using AI to listen to your customers at scale — and turn what you hear into the next decision.",
-    speaker: "Reena Goore",
+    speaker: "Reena Gore",
     role: "Speaker · Featured",
     tag: "Growth",
     accent: "blue",

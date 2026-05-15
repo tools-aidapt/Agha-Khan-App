@@ -3,11 +3,12 @@
 /* Organiser credit (Ismaili Civic Kenya) — sits between event facts and agenda */
 .organiser {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  gap: 24px;
   margin-top: 28px;
-  padding: 20px 16px;
+  padding: 16px 20px;
   background: var(--cream);
   border: 1px solid var(--line);
   border-radius: 18px;
@@ -19,13 +20,22 @@
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink-3);
+  flex-shrink: 0;
+}
+.organiser-line {
+  width: 1.5px;
+  align-self: stretch;
+  background: rgba(26, 20, 16, 0.32);
+  border-radius: 1px;
+  flex-shrink: 0;
 }
 .organiser-logo {
   display: block;
-  height: 96px;
+  height: 92px;
   width: auto;
-  max-width: 100%;
+  max-width: 50%;
   object-fit: contain;
+  flex-shrink: 0;
 }
 
 /* Compact event facts strip on welcome */

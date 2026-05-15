@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { WelcomeScreen } from './screens/ScreenWelcome.jsx';
-import { Step1Personal, Step2Business, Step3Interest } from './screens/ScreenForm.jsx';
+import { Step1Personal, Step2Business, Step3Interest, COUNTRIES, DEFAULT_COUNTRY_CODE } from './screens/ScreenForm.jsx';
 import { SessionsScreen, SuccessOverlay } from './screens/ScreenSessions.jsx';
 import {
   useTweaks,
@@ -61,9 +61,13 @@ export default function App() {
   // 1. Save the profile locally so the next QR scan skips the form.
   // 2. POST the submission to the n8n webhook (fire-and-forget — we don't block the UI).
   const handleSubmit = () => {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch { /* storage blocked */ }
+    const country = data.country || DEFAULT_COUNTRY_CODE;
+    const dialCode = COUNTRIES.find((c) => c.code === country)?.dial || '';
+    const enriched = { ...data, country, dialCode };
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(enriched)); } catch { /* storage blocked */ }
     const payload = {
-      ...data,
+      ...enriched,
+      phoneFull: `${dialCode} ${(data.phone || '').trim()}`.trim(),
       submittedAt: new Date().toISOString(),
       event: EVENT_ID,
     };

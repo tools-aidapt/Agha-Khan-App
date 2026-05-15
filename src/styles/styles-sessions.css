@@ -387,6 +387,10 @@
   margin-left: 6px;
   line-height: 0;
   border-radius: 4px;
+  /* Vertical nudge against the "Made with ❤ by" baseline.
+     Negative = up, positive = down. */
+  position: relative;
+  top: -3px;
   transition: opacity 0.18s ease, transform 0.18s ease;
 }
 .sessions-footer .made .aidapt-logo-link img {

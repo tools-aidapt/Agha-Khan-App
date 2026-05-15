@@ -105,7 +105,7 @@ function CardArrow() {
 // ───────── Speaker photos ─────────
 import hiteshPhoto from '../assets/speakers/hitesh-mahajan.jpg';
 import kayuyuPhoto from '../assets/speakers/kayuyu-mwaura.jpg';
-import reenaPhoto from '../assets/speakers/reena-goore.jpg';
+import reenaPhoto from '../assets/speakers/reena-gore.jpg';
 
 // ───────── Speaker bios ─────────
 const SPEAKER_BIOS = {
@@ -130,7 +130,7 @@ const SPEAKER_BIOS = {
     },
     links: [
       { label: 'LinkedIn', value: 'linkedin.com/in/hiteshmahajan', href: 'https://linkedin.com/in/hiteshmahajan' },
-      { label: 'Website',  value: 'aidapt.co',                       href: 'https://aidapt.co' },
+      { label: 'Website',  value: 'aidapt.co',                       href: 'https://www.aidapt.co' },
     ],
   },
   'Kayuyu Mwaura': {
@@ -148,14 +148,27 @@ const SPEAKER_BIOS = {
       { label: 'LinkedIn', value: 'linkedin.com/in/kayuyumwaura', href: 'https://www.linkedin.com/in/kayuyumwaura/' },
     ],
   },
-  'Reena Goore': {
+  'Reena Gore': {
     photo: reenaPhoto,
-    // tagline, location, expertise, bio, links — fill in when available
+    tagline: 'Founder & CEO, Intellique Solutions',
+    location: 'Nairobi, Kenya',
+    expertise: ['CEO advisory', 'Finance & operations', 'SME scaling', 'Leadership'],
+    bio: [
+      "Reena spent over two decades inside some of East Africa's most complex organisations — manufacturing, textiles, printing, plastics, packaging — as CFO and Operations Executive. She didn't just read the numbers. She fixed the businesses behind them.",
+      "Today, as Founder and CEO of Intellique Solutions Ltd — a business coaching and e-learning platform purpose-built for the African market — she addresses what she calls the Management Gap™: the leadership and systems deficiency that prevents promising SMEs from scaling sustainably.",
+      "Through her proprietary FPO Method™ (Finance, People, Operations), Reena has worked shoulder-to-shoulder with 50+ CEOs across 19 countries, guiding enterprises from USD 2M to USD 40M+ in revenue. Her approach is built from the boardroom floor — rooted in real P&Ls, real turnarounds, and real people.",
+      "Great businesses are built when people, processes, and money work in harmony. Reena works with founders, leaders, and teams to strengthen these three pillars — bringing clarity, alignment, and execution discipline.",
+    ],
+    links: [
+      { label: 'LinkedIn', value: 'linkedin.com/in/reena-gore', href: 'https://www.linkedin.com/in/reena-gore-884a73178/' },
+    ],
   },
   // Other speakers' full bios coming — for now we'll show their talk info only
 };
 
 // ───────── Speakers helpers ─────────
+const EXCLUDED_SPEAKERS = new Set(['Nafisa Teja', 'Zahiba Mawji']);
+
 function getSpeakers() {
   const tones = ['blue', 'red', 'ink', 'cream', 'blue'];
   const seen = new Set();
@@ -163,6 +176,7 @@ function getSpeakers() {
   const ADMIN_TITLES = /welcome address|closing remarks|mc opening|screen break/i;
   AGENDA.forEach((a) => {
     if (!a.speaker || seen.has(a.speaker)) return;
+    if (EXCLUDED_SPEAKERS.has(a.speaker)) return;
     if (a.kind === 'moment') return;
     if (ADMIN_TITLES.test(a.title)) return;
     seen.add(a.speaker);
@@ -350,7 +364,7 @@ function SpeakersSheet({ open, onClose }) {
   }
 
   return (
-    <Sheet open={open} onClose={onClose} eyebrow="Today's lineup" title={<>Five voices, <em>one day.</em></>}>
+    <Sheet open={open} onClose={onClose} eyebrow="Today's lineup" title={<>Three voices, <em>one day.</em></>}>
       <div className="spkr-list">
         {speakers.map((s) => (
           <button
@@ -490,7 +504,7 @@ function ShareCard() {
   return (
     <article className="hcard is-share" onClick={onShare}>
       <div className="hc-head">
-        <span className="hc-num">04 · Share the moment</span>
+        <span className="hc-num">05 · Share the moment</span>
         <span className="hc-pill is-live">● Streaming</span>
       </div>
       <h3>Share this YouTube Live with your family &amp; friends.</h3>
@@ -534,22 +548,20 @@ function ShareCard() {
   );
 }
 
+const SIGNUP_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScyvlU9W4q22FKS-QiQzNiSuMvQ7weNcIphVb9sU1bxtQTgKA/viewform';
+
 function SignUpCard() {
+  const onOpen = () => window.open(SIGNUP_FORM_URL, '_blank', 'noopener,noreferrer');
   return (
-    <article className="hcard is-action span-2">
+    <article className="hcard is-action" onClick={onOpen}>
       <div className="hc-head">
         <span className="hc-num">02 · Do this first</span>
         <span className="hc-pill is-action">Action needed</span>
       </div>
       <h3>Sign up for your sessions.</h3>
-      <p className="lead">Three afternoon breakouts run in parallel. Lock in your seat before talks start at 10:30.</p>
-      <div className="signup-mini">
-        <div className="slot">Breakout A · 2:00</div>
-        <div className="slot">Breakout B · 3:00</div>
-        <div className="slot">Breakout C · 4:00</div>
-      </div>
+      <p className="lead">Reserve your seat in today's afternoon breakouts. Capacity is limited per session — best to book before the morning talks begin.</p>
       <div className="hc-foot">
-        <span className="hc-link" style={{ color: 'white' }}>Choose your three →</span>
+        <span className="hc-link" style={{ color: 'white' }}>Open sign-up form →</span>
         <CardArrow />
       </div>
     </article>
@@ -566,7 +578,7 @@ function SpeakersCard({ onOpen }) {
         <span className="hc-pill">Today's lineup</span>
       </div>
       <h3>Today's speakers.</h3>
-      <p className="lead">Five voices on what AI changes for business, community, and the everyday.</p>
+      <p className="lead">Three voices on what AI changes for business in front of you — practical, today.</p>
       <div className="speaker-row">
         {visible.map((s) => (
           <div key={s.name} className="av" data-tone={s.tone} title={s.name}>
@@ -583,17 +595,20 @@ function SpeakersCard({ onOpen }) {
   );
 }
 
+const MENTIMETER_URL = 'https://www.menti.com/alwh48cnncbv';
+
 function MentimeterCard() {
+  const onOpen = () => window.open(MENTIMETER_URL, '_blank', 'noopener,noreferrer');
   return (
-    <article className="hcard">
+    <article className="hcard" onClick={onOpen}>
       <div className="hc-head">
-        <span className="hc-num">05 · During sessions</span>
+        <span className="hc-num">04 · During sessions</span>
         <span className="hc-pill is-live">● Live</span>
       </div>
       <h3>Mentimeter is live.</h3>
       <p className="lead">Vote in the live polls as they appear on screen. Code updates per session.</p>
       <div className="menti-code">
-        <span className="code">1428&nbsp;9036</span>
+        <span className="code">8804&nbsp;5243</span>
         <div className="info">
           <span className="a">Tap to join</span>
           <span className="b">menti.com · session 01</span>
@@ -656,17 +671,20 @@ function SlideDecksCard() {
   );
 }
 
+const SURVEY_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScUPAatlte0iH-VJTZhO21ryifjYWvh6cDWeaZmQHsTj0FlCw/viewform';
+
 function SurveyCard() {
+  const onOpen = () => window.open(SURVEY_FORM_URL, '_blank', 'noopener,noreferrer');
   return (
-    <article className="hcard is-locked">
+    <article className="hcard" onClick={onOpen}>
       <div className="hc-head">
         <span className="hc-num">08 · End of day</span>
-        <span className="hc-pill is-locked">○ Opens 4:00 PM</span>
+        <span className="hc-pill">60 seconds</span>
       </div>
       <h3>Post-event survey.</h3>
       <p className="lead">Sixty seconds, six questions. Help us shape the next one — every answer is read by a human.</p>
       <div className="hc-foot">
-        <span className="hc-link is-muted">Saved for later</span>
+        <span className="hc-link">Open survey</span>
         <CardArrow />
       </div>
     </article>
@@ -712,10 +730,10 @@ export function SessionsScreen({ data }) {
           <Divider label="Before talks start" />
           <SignUpCard />
           <SpeakersCard onOpen={() => setSheet('speakers')} />
-          <ShareCard />
 
           <Divider label="During the day" />
           <MentimeterCard />
+          <ShareCard />
 
           <Divider label="After today" />
           <ClassCard onOpen={() => setSheet('class')} />

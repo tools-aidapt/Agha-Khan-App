@@ -1,8 +1,7 @@
 import React from 'react';
 import { AGENDA, EVENT_META } from '../agenda.js';
-// import ismailiCivicLogo from '../assets/ismaili-civic-kenya.png';
-// ↑ uncomment once src/assets/ismaili-civic-kenya.png exists on disk
-const ismailiCivicLogo = null;
+// Served from /public — same file is the favicon + share image
+const ismailiCivicLogo = '/ismaili-civic-kenya.png';
 
 export function BrandMark() {
   return (
@@ -93,6 +92,7 @@ export function WelcomeScreen({ onBegin }) {
       {ismailiCivicLogo && (
         <div className="organiser">
           <span className="organiser-eyebrow">Organised by</span>
+          <span className="organiser-line" aria-hidden="true"></span>
           <img
             className="organiser-logo"
             src={ismailiCivicLogo}
