@@ -640,7 +640,7 @@ function SignUpCard() {
       href={SIGNUP_FORM_URL}
       ariaLabel="Sign up for your breakout sessions"
       eyebrow="Action needed · Do this first"
-      title="Sign up for your sessions"
+      title="Sign up for the session if you haven't already"
       sub="Pick your breakout tracks."
       glyph={(
         <svg width="18" height="18" viewBox="0 0 16 16" fill="none">
