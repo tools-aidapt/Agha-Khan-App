@@ -570,7 +570,7 @@ const DIAGNOSTIC_BOOKING_URL = 'https://booknow.aidapt.co/#/AI-Diagnostic-Sessio
 const TAKEHOME_RESOURCES = [
   {
     label: 'Prompt library',
-    sub: '10 for work, 10 for home — copy, paste, work smarter.',
+    sub: '10 for work, 10 for home. Copy, paste, work smarter.',
     href: 'https://www.aidapt.co/#prompts',
     icon: (
       <svg width="15" height="15" viewBox="0 0 14 14" fill="none">
@@ -581,7 +581,7 @@ const TAKEHOME_RESOURCES = [
   },
   {
     label: 'Tools that matter',
-    sub: 'A curated short list — the few we use every week.',
+    sub: 'A curated short list. The few we use every week.',
     href: 'https://www.aidapt.co/#tools',
     icon: (
       <svg width="15" height="15" viewBox="0 0 14 14" fill="none">
@@ -659,8 +659,8 @@ function DiagnosticCard() {
       href={DIAGNOSTIC_BOOKING_URL}
       ariaLabel="Book your free 60-minute AI Diagnostic Session"
       eyebrow="Bonus · For business leaders"
-      title="Free 60-min AI Diagnostic Session"
-      sub="A clear 90-day roadmap. Limited seats. No pitch."
+      title="AI Readiness Diagnostic"
+      sub="60 minutes. A 90-day roadmap you can act on. No pitch."
       glyph={(
         <svg width="18" height="18" viewBox="0 0 16 16" fill="none">
           <rect x="2" y="3" width="12" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.4"/>
@@ -685,7 +685,7 @@ function TakeHomeAppCard() {
       </div>
       <h3>Take <em>Aidapt</em> home with you.</h3>
       <p className="lead">
-        We help owners and small teams turn AI into a daily habit, not a buzzword. Here&rsquo;s what we packed for the ride home.
+        We help operators turn AI on inside their business. Not someday, this week. Here&rsquo;s what we packed for the ride home.
       </p>
       <div className="app-preview-inset">
         <div className="app-preview-head">
@@ -718,7 +718,7 @@ function TakeHomeAppCard() {
         <div className="aidapt-pitch">
           <span className="pitch-eyebrow">Why Aidapt</span>
           <p>
-            Most AI tools assume you have a tech team. We don't. Aidapt builds practical AI workflows alongside owners and small teams — start where you are, ship what works.
+            Most AI projects end in a deck. Yours won't. Aidapt embeds a Pod inside your business, builds in 2-week sprints, and leaves you owning the system. From AI-ambition to AI-native.
           </p>
           <button
             type="button"
@@ -726,8 +726,8 @@ function TakeHomeAppCard() {
             onClick={(e) => openLink(e, DIAGNOSTIC_BOOKING_URL)}
           >
             <span className="pitch-cta-text">
-              <span className="pitch-cta-eyebrow">Talk to us</span>
-              <span className="pitch-cta-label">Book a free 60-min diagnostic</span>
+              <span className="pitch-cta-eyebrow">Start here</span>
+              <span className="pitch-cta-label">Book your AI Readiness Diagnostic</span>
             </span>
             <span className="pitch-cta-go" aria-hidden="true">
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -755,7 +755,7 @@ function SpeakersCard({ onOpen }) {
         <span className="hc-pill">Today's lineup</span>
       </div>
       <h3>Today's speakers.</h3>
-      <p className="lead">Three voices on what AI changes for business in front of you — practical, today.</p>
+      <p className="lead">Three voices on what AI changes for business in front of you. Practical, today.</p>
       <div className="speaker-row">
         {visible.map((s) => (
           <div key={s.name} className="av" data-tone={s.tone} title={s.name}>
@@ -781,7 +781,7 @@ function ClassCard({ onOpen }) {
       </div>
       <h3>The 6-session program.</h3>
       <p className="lead">
-        A six-week journey starting every Saturday. One evening a week of practical, hands-on learning — move from curious to confident in the age of AI.
+        A six-week journey starting every Saturday. One evening a week of practical, hands-on learning. Move from curious to confident in the age of AI.
       </p>
       <div className="programme-stripe" aria-hidden="true">
         <span className="fill"></span>
@@ -815,7 +815,7 @@ function SurveyCard() {
         <span className="hc-pill">60 seconds</span>
       </div>
       <h3>Post-event survey.</h3>
-      <p className="lead">Sixty seconds, six questions. Help us shape the next one — every answer is read by a human.</p>
+      <p className="lead">Sixty seconds, six questions. Help us shape the next one. Every answer is read by a human.</p>
       <div className="hc-foot">
         <span className="hc-link">Open survey</span>
         <CardArrow />
@@ -861,7 +861,7 @@ export function SessionsScreen({ data }) {
         <div className="eyebrow" style={{ marginTop: 14 }}>Welcome, {firstName}</div>
         <h1>Your day, <em>in order.</em></h1>
         <p className="lede">
-          Everything you need today — from what's happening right now to tonight's wrap. Tap a card to dive in.
+          Everything you need today. From what's happening right now to tonight's wrap. Tap a card to dive in.
         </p>
       </div>
 
