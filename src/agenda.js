@@ -1,8 +1,7 @@
 // Real seminar agenda — AI Unpacked, Aga Khan Pavilion Nairobi
 export const AGENDA = [
   { time: "10:00", ampm: "AM", title: "Doors open & arrival",      kind: "moment"                                                  },
-  { time: "10:30", ampm: "AM", title: "MC opening",                kind: "moment",   speaker: "Reshma"                              },
-  { time: "10:35", ampm: "AM", title: "Welcome address",           kind: "talk",     speaker: "Nadia"                               },
+  { time: "10:30", ampm: "AM", title: "Welcome address",           kind: "talk",     speaker: "VP Ashif Kassam"                     },
   { time: "10:45", ampm: "AM", title: "Opening keynote",           kind: "keynote",  speaker: "Hitesh Mahajan",  tag: "Speaker 01"  },
   { time: "11:15", ampm: "AM", title: "Seat shuffle",              kind: "moment"                                                  },
   { time: "11:18", ampm: "AM", title: "Second keynote",            kind: "keynote",  speaker: "Kayuyu Mwaura",   tag: "Speaker 02"  },
@@ -19,7 +18,7 @@ export const EVENT_META = {
   title: "AI Unpacked",
   subtitle: "A Jamati Premier",
   venue: "Aga Khan Pavilion · Nairobi",
-  mc: "Reshma",
+  mc: "VP Ashif Kassam",
   doors: "10:00 AM",
   hardStart: "10:30 AM",
 };

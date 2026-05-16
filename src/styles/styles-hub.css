@@ -242,6 +242,48 @@
   text-align: center;
   letter-spacing: 0.02em;
 }
+.hcard.is-action .signup-form-chip {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  background: rgba(255,255,255,0.14);
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 14px;
+  margin-top: 2px;
+}
+.hcard.is-action .signup-form-chip .glyph {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.2);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  flex-shrink: 0;
+}
+.hcard.is-action .signup-form-chip .info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+.hcard.is-action .signup-form-chip .info .a {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.72);
+}
+.hcard.is-action .signup-form-chip .info .b {
+  font-size: 13px;
+  font-weight: 500;
+  color: white;
+}
 
 /* ─── Speakers card ─── */
 .speaker-row {
@@ -384,6 +426,223 @@
   background: var(--red);
   border-color: var(--red);
   color: #fff;
+}
+
+/* ─── Take-home app preview card ─── */
+.hcard.is-takehome {
+  background: var(--cream);
+  border-color: var(--cream-edge);
+}
+.hcard.is-takehome .lead strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+.hcard.is-takehome .app-preview-inset {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  margin-top: 4px;
+  overflow: hidden;
+}
+.hcard.is-takehome .app-preview-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px 12px;
+  background: var(--blue-tint);
+  border-bottom: 1px solid rgba(11, 102, 194, 0.12);
+}
+.hcard.is-takehome .app-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: var(--blue);
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+.hcard.is-takehome .app-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.hcard.is-takehome .app-brand .name {
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.1;
+}
+.hcard.is-takehome .app-brand .by {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+}
+.hcard.is-takehome .app-preview-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.hcard.is-takehome .app-preview-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--ink-2);
+}
+.hcard.is-takehome .app-preview-list li:last-child {
+  border-bottom: none;
+}
+.hcard.is-takehome .app-preview-list li svg {
+  color: var(--ink-4);
+  flex-shrink: 0;
+}
+.hcard.is-takehome .app-preview-cta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 14px 0;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--red-soft);
+  border: 1px dashed rgba(211, 60, 31, 0.32);
+  color: var(--red-deep);
+}
+.hcard.is-takehome .app-preview-cta .cta-copy {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.hcard.is-takehome .app-preview-cta .cta-eyebrow {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.78;
+}
+.hcard.is-takehome .app-preview-cta .cta-label {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--ink);
+}
+.hcard.is-takehome .app-preview-cta svg {
+  color: var(--red-deep);
+  flex-shrink: 0;
+}
+.hcard.is-takehome .takehome-bonus {
+  padding: 14px 16px 16px;
+  margin: 12px 0 0;
+  background: var(--cream-deep);
+  border-top: 1px solid var(--line);
+}
+.hcard.is-takehome .takehome-bonus .bonus-lbl {
+  display: block;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--red-deep);
+  margin-bottom: 6px;
+}
+.hcard.is-takehome .takehome-bonus p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+.hcard.is-takehome .takehome-bonus p strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+.hcard.is-takehome .takehome-meeting-chip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--paper);
+  border: 1px dashed var(--line-strong);
+}
+.hcard.is-takehome .takehome-meeting-chip.is-ready {
+  cursor: pointer;
+  border-color: rgba(11, 102, 194, 0.35);
+  background: var(--blue-tint);
+  transition: border-color 0.2s, transform 0.2s;
+}
+.hcard.is-takehome .takehome-meeting-chip.is-ready:hover {
+  border-color: rgba(11, 102, 194, 0.55);
+  transform: translateY(-1px);
+}
+.hcard.is-takehome .takehome-meeting-chip.is-pending {
+  opacity: 0.92;
+  cursor: default;
+}
+.hcard.is-takehome .takehome-meeting-chip .glyph {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: var(--cream-deep);
+  color: var(--ink-3);
+  flex-shrink: 0;
+}
+.hcard.is-takehome .takehome-meeting-chip.is-ready .glyph {
+  background: var(--blue-soft);
+  color: var(--blue-deep);
+}
+.hcard.is-takehome .takehome-meeting-chip .info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.hcard.is-takehome .takehome-meeting-chip .info .a {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+}
+.hcard.is-takehome .takehome-meeting-chip.is-ready .info .a {
+  color: var(--blue-deep);
+}
+.hcard.is-takehome .takehome-meeting-chip .info .b {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-2);
+  line-height: 1.35;
+}
+.hcard.is-takehome .takehome-meeting-chip.is-ready .info .b {
+  color: var(--ink);
+}
+.hcard.is-takehome .takehome-meeting-chip .go {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--blue);
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 /* ─── Aidapt programme card ─── */

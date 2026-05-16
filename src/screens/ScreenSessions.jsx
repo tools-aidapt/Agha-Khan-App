@@ -496,8 +496,8 @@ function AgendaSheet({ open, onClose }) {
 
 // ───────── Hub cards ─────────
 function NowCard({ onOpen }) {
-  const now = AGENDA[3];
-  const next = AGENDA[5];
+  const now = AGENDA.find((a) => a.title === 'Opening keynote') ?? AGENDA[2];
+  const next = AGENDA.find((a) => a.title === 'Second keynote') ?? AGENDA[4];
   return (
     <article className="hcard is-now span-2" onClick={onOpen}>
       <div className="hc-head">
@@ -602,6 +602,17 @@ function ShareCard() {
 }
 
 const SIGNUP_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScyvlU9W4q22FKS-QiQzNiSuMvQ7weNcIphVb9sU1bxtQTgKA/viewform';
+const AIDAPT_HOME_URL = 'https://www.aidapt.co';
+/** Paste Calendly / Teams / Zoom URL here when ready — bonus chip + footer use it. */
+const DIAGNOSTIC_MEETING_URL = '';
+
+const SIGNUP_TRACKS = SESSIONS.filter((s) => s.id <= 5);
+
+const APP_PREVIEW_ITEMS = [
+  { label: 'Prompts · 10 for work, 10 for home' },
+  { label: 'Tools that matter' },
+  { label: '7-day walkthrough' },
+];
 
 function SignUpCard() {
   const onOpen = () => window.open(SIGNUP_FORM_URL, '_blank', 'noopener,noreferrer');
@@ -612,9 +623,114 @@ function SignUpCard() {
         <span className="hc-pill is-action">Action needed</span>
       </div>
       <h3>Sign up for your sessions.</h3>
-      <p className="lead">Reserve your seat in today's afternoon breakouts. Capacity is limited per session — best to book before the morning talks begin.</p>
+      <p className="lead">
+        Pick your breakout tracks before we start — one quick form, about two minutes.
+      </p>
+      <div className="signup-mini" aria-hidden="true">
+        {SIGNUP_TRACKS.map((s) => (
+          <span key={s.id} className="slot" title={s.title}>
+            {s.track.replace(/\s*(AM|PM)$/i, '')}
+          </span>
+        ))}
+      </div>
+      <div className="signup-form-chip" aria-hidden="true">
+        <span className="glyph">✓</span>
+        <div className="info">
+          <span className="a">Google Form · ~2 min</span>
+          <span className="b">{SIGNUP_TRACKS.length} tracks to choose from</span>
+        </div>
+      </div>
       <div className="hc-foot">
-        <span className="hc-link" style={{ color: 'white' }}>Open sign-up form →</span>
+        <span className="hc-link" style={{ color: 'white' }}>Open sign-up form</span>
+        <CardArrow />
+      </div>
+    </article>
+  );
+}
+
+function TakeHomeAppCard() {
+  const hasMeetingLink = Boolean(DIAGNOSTIC_MEETING_URL?.trim());
+  const onOpenResources = () => window.open(AIDAPT_HOME_URL, '_blank', 'noopener,noreferrer');
+  const onOpenMeeting = (e) => {
+    e.stopPropagation();
+    if (hasMeetingLink) {
+      window.open(DIAGNOSTIC_MEETING_URL.trim(), '_blank', 'noopener,noreferrer');
+    }
+  };
+  return (
+    <article className="hcard is-takehome span-2" onClick={onOpenResources}>
+      <div className="hc-head">
+        <span className="hc-num">09 · Before you leave</span>
+        <span className="hc-pill is-soon">On your phone</span>
+      </div>
+      <h3>It&rsquo;s already on your phone.</h3>
+      <p className="lead">
+        The QR on your table opened <strong>AI Unpacked</strong> — your home base for putting AI to work after today.
+      </p>
+      <div className="app-preview-inset">
+        <div className="app-preview-head">
+          <span className="app-icon">AI</span>
+          <div className="app-brand">
+            <span className="name">AI Unpacked</span>
+            <span className="by">by Aidapt</span>
+          </div>
+        </div>
+        <ul className="app-preview-list">
+          {APP_PREVIEW_ITEMS.map((item) => (
+            <li key={item.label}>
+              <span>{item.label}</span>
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                <path d="M4 2 L9 7 L4 12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </li>
+          ))}
+        </ul>
+        <div className="app-preview-cta">
+          <div className="cta-copy">
+            <span className="cta-eyebrow">For you, today</span>
+            <span className="cta-label">Free Resources from Aidapt</span>
+          </div>
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <path d="M2 6 L10 6 M6 2 L10 6 L6 10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </div>
+        <div className="takehome-bonus">
+          <span className="bonus-lbl">Bonus · For business leaders</span>
+          <p>
+            <strong>Free 60-min AI Diagnostic Session.</strong>{' '}
+            Limited seats. No pitch — just a clear 90-day roadmap, whether we work together or not.
+          </p>
+          <div
+            className={"takehome-meeting-chip" + (hasMeetingLink ? ' is-ready' : ' is-pending')}
+            onClick={onOpenMeeting}
+            role={hasMeetingLink ? 'link' : undefined}
+            tabIndex={hasMeetingLink ? 0 : undefined}
+            onKeyDown={hasMeetingLink ? (e) => { if (e.key === 'Enter' || e.key === ' ') onOpenMeeting(e); } : undefined}
+          >
+            <span className="glyph" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <rect x="2" y="3" width="12" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.4"/>
+                <path d="M2 6.5 H14 M5.5 2 V4.5 M10.5 2 V4.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+              </svg>
+            </span>
+            <div className="info">
+              <span className="a">{hasMeetingLink ? 'Book your session' : 'Meeting link'}</span>
+              <span className="b">
+                {hasMeetingLink ? 'Tap to open scheduling link' : 'Added here when your link is ready'}
+              </span>
+            </div>
+            {hasMeetingLink && (
+              <span className="go" aria-hidden="true">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <path d="M2 6 L10 6 M6 2 L10 6 L6 10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+      <div className="hc-foot">
+        <span className="hc-link">Explore free resources</span>
         <CardArrow />
       </div>
     </article>
@@ -808,6 +924,9 @@ export function SessionsScreen({ data }) {
           <Divider label="Later this week" />
           <SlideDecksCard onOpen={() => setSheet('decks')} />
           <SurveyCard />
+
+          <Divider label="Before you leave" />
+          <TakeHomeAppCard />
         </div>
       )}
 
