@@ -149,7 +149,6 @@ const SPEAKER_BIOS = {
       { label: 'LinkedIn',   value: 'linkedin.com/in/kayuyumwaura',  href: 'https://www.linkedin.com/in/kayuyumwaura/' },
       { label: 'Slide deck', value: 'The ABCs of AI (PDF)',          href: '/decks/abcs-of-ai-kayuyu.pdf' },
     ],
-    slideDeck: { title: 'The ABCs of AI', url: '/decks/abcs-of-ai-kayuyu.pdf' },
   },
   'Reena Gore': {
     photo: reenaPhoto,
@@ -200,7 +199,6 @@ function getSpeakers() {
       company: bio?.company || null,
       links: bio?.links || null,
       photo: bio?.photo || null,
-      slideDeck: bio?.slideDeck || null,
     });
   });
   return speakers.map((s, i) => ({ ...s, tone: tones[i % tones.length] }));
@@ -402,19 +400,21 @@ function SpeakersSheet({ open, onClose }) {
 }
 
 const CLASS_OUTLINE = [
-  { n: 1, title: "Foundations — what AI actually is", desc: "Cut through the noise. We map the landscape so you can spot real value vs. hype." },
-  { n: 2, title: "Operations — automating the boring stuff", desc: "Find the ten hours of weekly busywork in your business and replace them with agents." },
-  { n: 3, title: "Customer intelligence", desc: "Turn every conversation, review, and call into a same-day signal you can act on." },
-  { n: 4, title: "Marketing & content, reimagined", desc: "From content calendars to one-to-one campaigns at scale. Tools and real-world cases." },
-  { n: 5, title: "Your first workflow — live build", desc: "A hands-on lab. You leave with one working AI workflow, deployed inside your business." },
-  { n: 6, title: "Going live & what's next", desc: "Demo day with the cohort. Plus a 90-day plan for embedding AI across your team." },
+  { n: 1, title: "Understand AI & Build Your AI Personality", desc: "Train Claude & ChatGPT to think, speak, and work exactly like you. Create a personalized AI profile that responds in your voice, every time." },
+  { n: 2, title: "Research & Professional Drafting", desc: "Use AI as your research partner for professional excellence. Master advanced research techniques and draft high-quality emails, proposals, and social media profiles." },
+  { n: 3, title: "Presentations & Storytelling", desc: "Create professional, visually compelling decks in minutes using Gamma and Canva AI. Turn briefs into branded presentations instantly without design skills." },
+  { n: 4, title: "AI for Families", desc: "Explore safe, effective, and smart ways to use AI for the whole family. Use Google LLMs (Gemini) as a personalized tutor and learn best practices for parents." },
+  { n: 5, title: "AI Connectors & Supercharging Efficiency", desc: "Connect AI to your daily tools for seamless productivity. Organize your calendar, emails, and tasks with Claude and meet the Manus AI Agent for workflow automation." },
+  { n: 6, title: "The Capstone Launch", desc: "Put it all together into a real, deployable project. Form teams to build communications packs and receive your Certificate of Completion plus access to the monthly drop-in clinic." },
 ];
+
+const PROGRAM_REFERENCE_URL = 'https://www.reenagore.net';
 
 function ClassDetailsSheet({ open, onClose }) {
   return (
-    <Sheet open={open} onClose={onClose} eyebrow="Reference material" title={<>The 6-session <em>class.</em></>}>
+    <Sheet open={open} onClose={onClose} eyebrow="Reference material" title={<>The 6-session <em>program.</em></>}>
       <p style={{ fontSize: 14, color: 'var(--ink-2)', margin: '4px 0 18px', lineHeight: 1.55 }}>
-        A six-week private class starting October. One evening a week, twelve founders, one cohort.
+        A six-week journey starting every Saturday. One evening a week, practical hands-on learning, one cohort. Empowering you to move from curious to confident in the age of AI.
       </p>
       <div className="class-list">
         {CLASS_OUTLINE.map((c) => (
@@ -427,55 +427,17 @@ function ClassDetailsSheet({ open, onClose }) {
           </div>
         ))}
       </div>
-    </Sheet>
-  );
-}
-
-function SlideDecksSheet({ open, onClose }) {
-  const speakers = getSpeakers();
-  return (
-    <Sheet open={open} onClose={onClose} eyebrow="Reference · Slide decks" title={<>The day in <em>slides.</em></>}>
-      <p style={{ fontSize: 14, color: 'var(--ink-2)', margin: '4px 0 18px', lineHeight: 1.55 }}>
-        Decks appear here as speakers share them. Tap any available deck to open the PDF.
+      <p style={{ fontSize: 13, color: 'var(--ink-3)', margin: '20px 0 0', textAlign: 'center' }}>
+        Learn more at{' '}
+        <a
+          href={PROGRAM_REFERENCE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: 'var(--blue-deep)', fontWeight: 600 }}
+        >
+          reenagore.net
+        </a>
       </p>
-      <div className="deck-list">
-        {speakers.map((s) => {
-          const ready = !!s.slideDeck?.url;
-          const RowTag = ready ? 'a' : 'div';
-          const rowProps = ready
-            ? { href: s.slideDeck.url, target: '_blank', rel: 'noopener noreferrer' }
-            : {};
-          return (
-            <RowTag
-              key={s.name}
-              className={"deck-row" + (ready ? '' : ' is-pending')}
-              {...rowProps}
-            >
-              <div className="av" data-tone={s.tone}>
-                {s.photo ? <img src={s.photo} alt="" /> : initialsOf(s.name)}
-              </div>
-              <div className="body">
-                <div className="speaker">{s.name}</div>
-                <div className="title">
-                  {ready ? s.slideDeck.title : 'Deck coming soon'}
-                </div>
-              </div>
-              <span className="action" aria-hidden="true">
-                {ready ? (
-                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                    <path d="M3 9 L9 3 M4 3 L9 3 L9 8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                ) : (
-                  <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
-                    <rect x="3" y="6.5" width="8" height="6" rx="1" stroke="currentColor" strokeWidth="1.4"/>
-                    <path d="M5 6.5 V4.5 a2 2 0 0 1 4 0 V6.5" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round"/>
-                  </svg>
-                )}
-              </span>
-            </RowTag>
-          );
-        })}
-      </div>
     </Sheet>
   );
 }
@@ -603,134 +565,180 @@ function ShareCard() {
 
 const SIGNUP_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScyvlU9W4q22FKS-QiQzNiSuMvQ7weNcIphVb9sU1bxtQTgKA/viewform';
 const AIDAPT_HOME_URL = 'https://www.aidapt.co';
-/** Paste Calendly / Teams / Zoom URL here when ready — bonus chip + footer use it. */
-const DIAGNOSTIC_MEETING_URL = '';
+const DIAGNOSTIC_BOOKING_URL = 'https://booknow.aidapt.co/#/AI-Diagnostic-Session';
 
-const SIGNUP_TRACKS = SESSIONS.filter((s) => s.id <= 5);
-
-const APP_PREVIEW_ITEMS = [
-  { label: 'Prompts · 10 for work, 10 for home' },
-  { label: 'Tools that matter' },
-  { label: '7-day walkthrough' },
+const TAKEHOME_RESOURCES = [
+  {
+    label: 'Prompt library',
+    sub: '10 for work, 10 for home — copy, paste, work smarter.',
+    href: 'https://www.aidapt.co/#prompts',
+    icon: (
+      <svg width="15" height="15" viewBox="0 0 14 14" fill="none">
+        <path d="M2 3 H12 V9 H6.5 L4 11 V9 H2 Z" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M5 6 H9" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+      </svg>
+    ),
+  },
+  {
+    label: 'Tools that matter',
+    sub: 'A curated short list — the few we use every week.',
+    href: 'https://www.aidapt.co/#tools',
+    icon: (
+      <svg width="15" height="15" viewBox="0 0 14 14" fill="none">
+        <rect x="1.5" y="1.5" width="4.5" height="4.5" rx="1" stroke="currentColor" strokeWidth="1.4"/>
+        <rect x="8" y="1.5" width="4.5" height="4.5" rx="1" stroke="currentColor" strokeWidth="1.4"/>
+        <rect x="1.5" y="8" width="4.5" height="4.5" rx="1" stroke="currentColor" strokeWidth="1.4"/>
+        <rect x="8" y="8" width="4.5" height="4.5" rx="1" stroke="currentColor" strokeWidth="1.4"/>
+      </svg>
+    ),
+  },
+  {
+    label: '7-day walkthrough',
+    sub: 'One small AI win in your inbox each morning.',
+    href: 'https://www.aidapt.co/#walkthrough',
+    icon: (
+      <svg width="15" height="15" viewBox="0 0 14 14" fill="none">
+        <rect x="1.5" y="2.5" width="11" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.4"/>
+        <path d="M1.5 5.5 H12.5 M4.5 1.5 V3.5 M9.5 1.5 V3.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+        <path d="M5 9 L6.5 10.5 L9 8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+  },
 ];
 
-function SignUpCard() {
-  const onOpen = () => window.open(SIGNUP_FORM_URL, '_blank', 'noopener,noreferrer');
+function CompactCard({ tone, href, ariaLabel, eyebrow, title, sub, glyph }) {
+  const onOpen = () => window.open(href, '_blank', 'noopener,noreferrer');
+  const onKey = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpen(); } };
   return (
-    <article className="hcard is-action" onClick={onOpen}>
-      <div className="hc-head">
-        <span className="hc-num">02 · Do this first</span>
-        <span className="hc-pill is-action">Action needed</span>
+    <div
+      className={`compact-card is-${tone}`}
+      role="link"
+      tabIndex={0}
+      onClick={onOpen}
+      onKeyDown={onKey}
+      aria-label={ariaLabel}
+    >
+      <span className="cc-glyph" aria-hidden="true">{glyph}</span>
+      <div className="cc-copy">
+        <span className="cc-eyebrow">{eyebrow}</span>
+        <span className="cc-title">{title}</span>
+        {sub && <span className="cc-sub">{sub}</span>}
       </div>
-      <h3>Sign up for your sessions.</h3>
-      <p className="lead">
-        Pick your breakout tracks before we start — one quick form, about two minutes.
-      </p>
-      <div className="signup-mini" aria-hidden="true">
-        {SIGNUP_TRACKS.map((s) => (
-          <span key={s.id} className="slot" title={s.title}>
-            {s.track.replace(/\s*(AM|PM)$/i, '')}
-          </span>
-        ))}
-      </div>
-      <div className="signup-form-chip" aria-hidden="true">
-        <span className="glyph">✓</span>
-        <div className="info">
-          <span className="a">Google Form · ~2 min</span>
-          <span className="b">{SIGNUP_TRACKS.length} tracks to choose from</span>
-        </div>
-      </div>
-      <div className="hc-foot">
-        <span className="hc-link" style={{ color: 'white' }}>Open sign-up form</span>
-        <CardArrow />
-      </div>
-    </article>
+      <span className="cc-go" aria-hidden="true">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path d="M2 6 L10 6 M6 2 L10 6 L6 10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </span>
+    </div>
+  );
+}
+
+function SignUpCard() {
+  return (
+    <CompactCard
+      tone="blue"
+      href={SIGNUP_FORM_URL}
+      ariaLabel="Sign up for your breakout sessions"
+      eyebrow="Action needed · Do this first"
+      title="Sign up for your sessions"
+      sub="Pick your breakout tracks."
+      glyph={(
+        <svg width="18" height="18" viewBox="0 0 16 16" fill="none">
+          <path d="M3 4 H12 M3 8 H12 M3 12 H8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+          <path d="M10 11.5 L11.2 12.7 L13.5 10.4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      )}
+    />
+  );
+}
+
+function DiagnosticCard() {
+  return (
+    <CompactCard
+      tone="red"
+      href={DIAGNOSTIC_BOOKING_URL}
+      ariaLabel="Book your free 60-minute AI Diagnostic Session"
+      eyebrow="Bonus · For business leaders"
+      title="Free 60-min AI Diagnostic Session"
+      sub="A clear 90-day roadmap. Limited seats. No pitch."
+      glyph={(
+        <svg width="18" height="18" viewBox="0 0 16 16" fill="none">
+          <rect x="2" y="3" width="12" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.4"/>
+          <path d="M2 6.5 H14 M5.5 2 V4.5 M10.5 2 V4.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+        </svg>
+      )}
+    />
   );
 }
 
 function TakeHomeAppCard() {
-  const hasMeetingLink = Boolean(DIAGNOSTIC_MEETING_URL?.trim());
   const onOpenResources = () => window.open(AIDAPT_HOME_URL, '_blank', 'noopener,noreferrer');
-  const onOpenMeeting = (e) => {
+  const openLink = (e, href) => {
     e.stopPropagation();
-    if (hasMeetingLink) {
-      window.open(DIAGNOSTIC_MEETING_URL.trim(), '_blank', 'noopener,noreferrer');
-    }
+    window.open(href, '_blank', 'noopener,noreferrer');
   };
   return (
     <article className="hcard is-takehome span-2" onClick={onOpenResources}>
       <div className="hc-head">
-        <span className="hc-num">09 · Before you leave</span>
+        <span className="hc-num">05 · Before you leave</span>
         <span className="hc-pill is-soon">On your phone</span>
       </div>
-      <h3>It&rsquo;s already on your phone.</h3>
+      <h3>Take <em>Aidapt</em> home with you.</h3>
       <p className="lead">
-        The QR on your table opened <strong>AI Unpacked</strong> — your home base for putting AI to work after today.
+        We help owners and small teams turn AI into a daily habit, not a buzzword. Here&rsquo;s what we packed for the ride home.
       </p>
       <div className="app-preview-inset">
         <div className="app-preview-head">
           <span className="app-icon">AI</span>
           <div className="app-brand">
             <span className="name">AI Unpacked</span>
-            <span className="by">by Aidapt</span>
+            <span className="by">Free resources from Aidapt</span>
           </div>
         </div>
-        <ul className="app-preview-list">
-          {APP_PREVIEW_ITEMS.map((item) => (
-            <li key={item.label}>
-              <span>{item.label}</span>
-              <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                <path d="M4 2 L9 7 L4 12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+        <ul className="takehome-list">
+          {TAKEHOME_RESOURCES.map((r) => (
+            <li key={r.label}>
+              <button
+                type="button"
+                className="takehome-row"
+                onClick={(e) => openLink(e, r.href)}
+              >
+                <span className="th-icon" aria-hidden="true">{r.icon}</span>
+                <span className="th-text">
+                  <span className="th-label">{r.label}</span>
+                  <span className="th-sub">{r.sub}</span>
+                </span>
+                <svg className="th-arrow" width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                  <path d="M4 2 L9 7 L4 12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
             </li>
           ))}
         </ul>
-        <div className="app-preview-cta">
-          <div className="cta-copy">
-            <span className="cta-eyebrow">For you, today</span>
-            <span className="cta-label">Free Resources from Aidapt</span>
-          </div>
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-            <path d="M2 6 L10 6 M6 2 L10 6 L6 10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </div>
-        <div className="takehome-bonus">
-          <span className="bonus-lbl">Bonus · For business leaders</span>
+        <div className="aidapt-pitch">
+          <span className="pitch-eyebrow">Why Aidapt</span>
           <p>
-            <strong>Free 60-min AI Diagnostic Session.</strong>{' '}
-            Limited seats. No pitch — just a clear 90-day roadmap, whether we work together or not.
+            Most AI tools assume you have a tech team. We don't. Aidapt builds practical AI workflows alongside owners and small teams — start where you are, ship what works.
           </p>
-          <div
-            className={"takehome-meeting-chip" + (hasMeetingLink ? ' is-ready' : ' is-pending')}
-            onClick={onOpenMeeting}
-            role={hasMeetingLink ? 'link' : undefined}
-            tabIndex={hasMeetingLink ? 0 : undefined}
-            onKeyDown={hasMeetingLink ? (e) => { if (e.key === 'Enter' || e.key === ' ') onOpenMeeting(e); } : undefined}
+          <button
+            type="button"
+            className="pitch-cta"
+            onClick={(e) => openLink(e, DIAGNOSTIC_BOOKING_URL)}
           >
-            <span className="glyph" aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <rect x="2" y="3" width="12" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.4"/>
-                <path d="M2 6.5 H14 M5.5 2 V4.5 M10.5 2 V4.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+            <span className="pitch-cta-text">
+              <span className="pitch-cta-eyebrow">Talk to us</span>
+              <span className="pitch-cta-label">Book a free 60-min diagnostic</span>
+            </span>
+            <span className="pitch-cta-go" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                <path d="M2 6 L10 6 M6 2 L10 6 L6 10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </span>
-            <div className="info">
-              <span className="a">{hasMeetingLink ? 'Book your session' : 'Meeting link'}</span>
-              <span className="b">
-                {hasMeetingLink ? 'Tap to open scheduling link' : 'Added here when your link is ready'}
-              </span>
-            </div>
-            {hasMeetingLink && (
-              <span className="go" aria-hidden="true">
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                  <path d="M2 6 L10 6 M6 2 L10 6 L6 10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </span>
-            )}
-          </div>
+          </button>
         </div>
       </div>
       <div className="hc-foot">
-        <span className="hc-link">Explore free resources</span>
+        <span className="hc-link">Explore everything at aidapt.co</span>
         <CardArrow />
       </div>
     </article>
@@ -743,7 +751,7 @@ function SpeakersCard({ onOpen }) {
   return (
     <article className="hcard" onClick={onOpen}>
       <div className="hc-head">
-        <span className="hc-num">03 · Read while you settle in</span>
+        <span className="hc-num">02 · Read while you settle in</span>
         <span className="hc-pill">Today's lineup</span>
       </div>
       <h3>Today's speakers.</h3>
@@ -764,43 +772,16 @@ function SpeakersCard({ onOpen }) {
   );
 }
 
-const MENTIMETER_URL = 'https://www.menti.com/alwh48cnncbv';
-
-function MentimeterCard() {
-  const onOpen = () => window.open(MENTIMETER_URL, '_blank', 'noopener,noreferrer');
-  return (
-    <article className="hcard" onClick={onOpen}>
-      <div className="hc-head">
-        <span className="hc-num">04 · During sessions</span>
-        <span className="hc-pill is-live">● Live</span>
-      </div>
-      <h3>Mentimeter is live.</h3>
-      <p className="lead">Vote in the live polls as they appear on screen. Code updates per session.</p>
-      <div className="menti-code">
-        <span className="code">8804&nbsp;5243</span>
-        <div className="info">
-          <span className="a">Tap to join</span>
-          <span className="b">menti.com · session 01</span>
-        </div>
-      </div>
-      <div className="hc-foot">
-        <span className="hc-link">Open Mentimeter</span>
-        <CardArrow />
-      </div>
-    </article>
-  );
-}
-
 function ClassCard({ onOpen }) {
   return (
     <article className="hcard is-programme span-2" onClick={onOpen}>
       <div className="hc-head">
-        <span className="hc-num">06 · Going deeper</span>
+        <span className="hc-num">03 · Going deeper</span>
         <span className="hc-pill is-soon">Reference</span>
       </div>
-      <h3>The 6-session class.</h3>
+      <h3>The 6-session program.</h3>
       <p className="lead">
-        After today, want the long version? A private six-week class for owners ready to put AI to work inside their own business.
+        A six-week journey starting every Saturday. One evening a week of practical, hands-on learning — move from curious to confident in the age of AI.
       </p>
       <div className="programme-stripe" aria-hidden="true">
         <span className="fill"></span>
@@ -811,31 +792,12 @@ function ClassCard({ onOpen }) {
         <span></span>
       </div>
       <div className="stat-row">
-        <div className="s"><span className="n">6 wks</span><span className="l">Tuesday evenings</span></div>
-        <div className="s"><span className="n">12</span><span className="l">Founders / cohort</span></div>
-        <div className="s"><span className="n">1:1</span><span className="l">Mentorship</span></div>
+        <div className="s"><span className="n">6 wks</span><span className="l">Saturday evenings</span></div>
+        <div className="s"><span className="n">1</span><span className="l">Hands-on cohort</span></div>
+        <div className="s"><span className="n">Cert</span><span className="l">On completion</span></div>
       </div>
       <div className="hc-foot">
         <span className="hc-link">See the curriculum</span>
-        <CardArrow />
-      </div>
-    </article>
-  );
-}
-
-function SlideDecksCard({ onOpen }) {
-  const ready = getSpeakers().filter((s) => s.slideDeck?.url).length;
-  const total = getSpeakers().length;
-  return (
-    <article className="hcard" onClick={onOpen}>
-      <div className="hc-head">
-        <span className="hc-num">07 · Reference</span>
-        <span className="hc-pill">{ready} of {total} ready</span>
-      </div>
-      <h3>Slide decks.</h3>
-      <p className="lead">Every speaker's deck lands here as they share them. Tap to browse what's available now.</p>
-      <div className="hc-foot">
-        <span className="hc-link">Browse decks</span>
         <CardArrow />
       </div>
     </article>
@@ -849,7 +811,7 @@ function SurveyCard() {
   return (
     <article className="hcard" onClick={onOpen}>
       <div className="hc-head">
-        <span className="hc-num">08 · End of day</span>
+        <span className="hc-num">04 · End of day</span>
         <span className="hc-pill">60 seconds</span>
       </div>
       <h3>Post-event survey.</h3>
@@ -874,7 +836,7 @@ function formatNairobiTime() {
 
 export function SessionsScreen({ data }) {
   const [loading, setLoading] = useState(true);
-  const [sheet, setSheet] = useState(null); // 'speakers' | 'class' | 'agenda' | 'decks' | null
+  const [sheet, setSheet] = useState(null); // 'speakers' | 'class' | 'agenda' | null
   const [nairobiTime, setNairobiTime] = useState(formatNairobiTime);
 
   useEffect(() => {
@@ -907,25 +869,21 @@ export function SessionsScreen({ data }) {
         <HubSkeleton />
       ) : (
         <div className="hub stagger">
+          <DiagnosticCard />
+          <SignUpCard />
+
           <Divider label={`Right now · ${nairobiTime}`} isNow />
           <NowCard onOpen={() => setSheet('agenda')} />
 
           <Divider label="Before talks start" />
-          <SignUpCard />
           <SpeakersCard onOpen={() => setSheet('speakers')} />
-
-          <Divider label="During the day" />
-          <MentimeterCard />
-          <ShareCard />
 
           <Divider label="After today" />
           <ClassCard onOpen={() => setSheet('class')} />
 
           <Divider label="Later this week" />
-          <SlideDecksCard onOpen={() => setSheet('decks')} />
           <SurveyCard />
 
-          <Divider label="Before you leave" />
           <TakeHomeAppCard />
         </div>
       )}
@@ -933,7 +891,6 @@ export function SessionsScreen({ data }) {
       <SpeakersSheet open={sheet === 'speakers'} onClose={() => setSheet(null)} />
       <ClassDetailsSheet open={sheet === 'class'} onClose={() => setSheet(null)} />
       <AgendaSheet open={sheet === 'agenda'} onClose={() => setSheet(null)} />
-      <SlideDecksSheet open={sheet === 'decks'} onClose={() => setSheet(null)} />
     </React.Fragment>
   );
 }

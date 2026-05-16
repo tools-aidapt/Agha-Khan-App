@@ -339,16 +339,44 @@ function Field({ label, required, error, children }) {
   );
 }
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+// Validates a domain like `foo.com`, `sub.foo.co.uk`, with optional scheme + path.
+const WEBSITE_RE = /^([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,}(\/[^\s]*)?$/i;
+
 // ──────── Step 1 ────────
 export function Step1Personal({ data, setData, onNext, onBack }) {
   const [errors, setErrors] = useState({});
+
+  const update = (field, value) => {
+    setData({ ...data, [field]: value });
+    if (errors[field]) setErrors({ ...errors, [field]: undefined });
+  };
+
   const submit = () => {
     const e = {};
-    if (!data.name?.trim()) e.name = "We need a name to address you by.";
-    if (!data.email?.trim()) e.email = "Email is required.";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) e.email = "That doesn't look like a valid email.";
-    if (!data.phone?.trim()) e.phone = "We'll only message for seminar updates.";
-    if (data.website?.trim() && !/\.[a-z]{2,}/i.test(data.website)) e.website = "Doesn't look like a valid website.";
+    const name = (data.name || '').trim();
+    const email = (data.email || '').trim();
+    const phone = (data.phone || '').trim();
+    const website = (data.website || '').trim();
+
+    if (!name) e.name = "We need a name to address you by.";
+    else if (name.length < 2) e.name = "Please enter your full name.";
+
+    if (!email) e.email = "Email is required.";
+    else if (!EMAIL_RE.test(email)) e.email = "Please enter a valid email address.";
+
+    if (!phone) e.phone = "We'll only message for seminar updates.";
+    else {
+      const digits = phone.replace(/\D/g, '');
+      if (digits.length < 6) e.phone = "Phone number is too short.";
+      else if (digits.length > 15) e.phone = "Phone number is too long.";
+    }
+
+    if (website) {
+      const bare = website.replace(/^https?:\/\//i, '');
+      if (!WEBSITE_RE.test(bare)) e.website = "Doesn't look like a valid website.";
+    }
+
     setErrors(e);
     if (Object.keys(e).length === 0) onNext();
   };
@@ -368,7 +396,8 @@ export function Step1Personal({ data, setData, onNext, onBack }) {
             type="text"
             placeholder="e.g. Sara Ahmed"
             value={data.name || ""}
-            onChange={(e) => setData({ ...data, name: e.target.value })}
+            onChange={(e) => update('name', e.target.value)}
+            maxLength={80}
             autoComplete="name" />
         </Field>
         <Field label="Email address" required error={errors.email}>
@@ -376,7 +405,8 @@ export function Step1Personal({ data, setData, onNext, onBack }) {
             type="email"
             placeholder="sara@yourcompany.com"
             value={data.email || ""}
-            onChange={(e) => setData({ ...data, email: e.target.value })}
+            onChange={(e) => update('email', e.target.value)}
+            maxLength={120}
             autoComplete="email"
             inputMode="email" />
         </Field>
@@ -390,7 +420,8 @@ export function Step1Personal({ data, setData, onNext, onBack }) {
               type="tel"
               placeholder="Mobile number"
               value={data.phone || ""}
-              onChange={(e) => setData({ ...data, phone: e.target.value })}
+              onChange={(e) => update('phone', e.target.value)}
+              maxLength={20}
               autoComplete="tel"
               inputMode="tel" />
           </div>
@@ -400,7 +431,8 @@ export function Step1Personal({ data, setData, onNext, onBack }) {
             type="url"
             placeholder="yourcompany.com"
             value={data.website || ""}
-            onChange={(e) => setData({ ...data, website: e.target.value })}
+            onChange={(e) => update('website', e.target.value)}
+            maxLength={120}
             autoComplete="url"
             inputMode="url" />
         </Field>
@@ -436,11 +468,22 @@ export function Step2Business({ data, setData, onNext, onBack }) {
   const isOwner = data.isOwner;
   const isYes = isOwner === true;
 
+  const update = (patch, clearFields = []) => {
+    setData({ ...data, ...patch });
+    if (clearFields.some((f) => errors[f])) {
+      const next = { ...errors };
+      clearFields.forEach((f) => { next[f] = undefined; });
+      setErrors(next);
+    }
+  };
+
   const submit = () => {
     const e = {};
     if (isOwner === undefined || isOwner === null) e.isOwner = "Pick one to continue.";
     if (isYes) {
-      if (!data.company?.trim()) e.company = "Company name is required.";
+      const company = (data.company || '').trim();
+      if (!company) e.company = "Company name is required.";
+      else if (company.length < 2) e.company = "Company name is too short.";
       if (!data.size) e.size = "Pick a team size.";
     }
     setErrors(e);
@@ -460,13 +503,13 @@ export function Step2Business({ data, setData, onNext, onBack }) {
       <div className="choice-row">
         <button
           className={"choice" + (isYes ? " is-selected" : "")}
-          onClick={() => setData({ ...data, isOwner: true })}>
+          onClick={() => update({ isOwner: true }, ['isOwner'])}>
           <span className="glyph">Yes</span>
           <span className="sub">I run a company or freelance practice.</span>
         </button>
         <button
           className={"choice" + (isOwner === false ? " is-selected" : "")}
-          onClick={() => setData({ ...data, isOwner: false, company: "", size: "" })}>
+          onClick={() => update({ isOwner: false, company: "", size: "" }, ['isOwner', 'company', 'size'])}>
           <span className="glyph">No</span>
           <span className="sub">I'm curious, exploring, or here to learn.</span>
         </button>
@@ -482,7 +525,8 @@ export function Step2Business({ data, setData, onNext, onBack }) {
                 type="text"
                 placeholder="e.g. Marigold Studio"
                 value={data.company || ""}
-                onChange={(e) => setData({ ...data, company: e.target.value })} />
+                maxLength={80}
+                onChange={(e) => update({ company: e.target.value }, ['company'])} />
             </Field>
             <Field label="Team size" required error={errors.size}>
               <div className="chips">
@@ -490,7 +534,7 @@ export function Step2Business({ data, setData, onNext, onBack }) {
                   <button
                     key={s}
                     className={"chip" + (data.size === s ? " is-selected" : "")}
-                    onClick={() => setData({ ...data, size: s })}>
+                    onClick={() => update({ size: s }, ['size'])}>
                     {s}
                   </button>
                 )}

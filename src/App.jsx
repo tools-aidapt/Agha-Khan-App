@@ -31,6 +31,12 @@ function loadStoredUser() {
   return null;
 }
 
+function normalizeWebsite(raw) {
+  const trimmed = (raw || '').trim();
+  if (!trimmed) return null;
+  return /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+}
+
 export default function App() {
   const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
   // Returning visitor: skip the form, restore their profile straight to sessions.
@@ -63,12 +69,28 @@ export default function App() {
   const handleSubmit = () => {
     const country = data.country || DEFAULT_COUNTRY_CODE;
     const dialCode = COUNTRIES.find((c) => c.code === country)?.dial || '';
-    const enriched = { ...data, country, dialCode };
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(enriched)); } catch { /* storage blocked */ }
+
+    const isOwner = data.isOwner === true;
+    const phoneDigits = (data.phone || '').replace(/\D/g, '');
+
+    const cleaned = {
+      name: (data.name || '').trim(),
+      email: (data.email || '').trim().toLowerCase(),
+      phone: phoneDigits || null,
+      country,
+      dialCode,
+      website: normalizeWebsite(data.website),
+      isOwner,
+      company: isOwner ? ((data.company || '').trim() || null) : null,
+      size: isOwner ? (data.size || null) : null,
+      interested: data.interested === true,
+    };
+
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(cleaned)); } catch { /* storage blocked */ }
+
     const payload = {
-      ...enriched,
-      website: data.website?.trim() ? data.website.trim() : null,
-      phoneFull: `${dialCode} ${(data.phone || '').trim()}`.trim(),
+      ...cleaned,
+      phoneFull: phoneDigits ? `${dialCode}${phoneDigits}` : null,
       submittedAt: new Date().toISOString(),
       event: EVENT_ID,
     };

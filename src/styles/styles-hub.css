@@ -211,80 +211,6 @@
   white-space: nowrap;
 }
 
-/* ─── Action card (session sign-up) ─── */
-.hcard.is-action {
-  background: linear-gradient(145deg, var(--blue) 0%, var(--blue-deep) 100%);
-  border-color: var(--blue);
-  color: white;
-}
-.hcard.is-action h3 { color: white; }
-.hcard.is-action p.lead { color: rgba(255,255,255,0.82); }
-.hcard.is-action .hc-num { color: rgba(255,255,255,0.6); }
-.hcard.is-action .hc-pill { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.3); color: white; }
-.hcard.is-action .hc-arrow { background: rgba(255,255,255,0.18); color: white; }
-.hcard.is-action:hover .hc-arrow { background: white; color: var(--blue-deep); }
-.hcard.is-action .signup-mini {
-  display: flex;
-  gap: 6px;
-  margin-top: 4px;
-  flex-wrap: wrap;
-}
-.hcard.is-action .signup-mini .slot {
-  flex: 1;
-  min-width: 80px;
-  padding: 9px 10px;
-  background: rgba(255,255,255,0.12);
-  border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 10px;
-  font-family: var(--mono);
-  font-size: 11px;
-  color: white;
-  text-align: center;
-  letter-spacing: 0.02em;
-}
-.hcard.is-action .signup-form-chip {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 12px 14px;
-  background: rgba(255,255,255,0.14);
-  border: 1px solid rgba(255,255,255,0.22);
-  border-radius: 14px;
-  margin-top: 2px;
-}
-.hcard.is-action .signup-form-chip .glyph {
-  width: 32px;
-  height: 32px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255,255,255,0.2);
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  color: white;
-  flex-shrink: 0;
-}
-.hcard.is-action .signup-form-chip .info {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  flex: 1;
-  min-width: 0;
-}
-.hcard.is-action .signup-form-chip .info .a {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.72);
-}
-.hcard.is-action .signup-form-chip .info .b {
-  font-size: 13px;
-  font-weight: 500;
-  color: white;
-}
-
 /* ─── Speakers card ─── */
 .speaker-row {
   display: flex;
@@ -315,44 +241,6 @@
 .speaker-row .av[data-tone="cream"] { background: var(--cream-edge);color: var(--ink-2); }
 .speaker-row .av { overflow: hidden; }
 .speaker-row .av img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-/* ─── Mentimeter card ─── */
-.menti-code {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 14px 16px;
-  background: var(--blue-tint);
-  border: 1px dashed rgba(11,102,194,0.35);
-  border-radius: 14px;
-  margin-top: 4px;
-}
-.menti-code .code {
-  font-family: var(--mono);
-  font-size: 26px;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  color: var(--blue-deep);
-  font-variant-numeric: tabular-nums;
-}
-.menti-code .info {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  flex: 1;
-}
-.menti-code .info .a {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--blue-deep);
-  opacity: 0.7;
-}
-.menti-code .info .b {
-  font-size: 12px;
-  color: var(--ink-2);
-}
 
 /* ─── Share (YouTube live) card ─── */
 .hcard.is-share .share-link-chip {
@@ -486,163 +374,161 @@
   text-transform: uppercase;
   color: var(--ink-4);
 }
-.hcard.is-takehome .app-preview-list {
+.hcard.is-takehome .takehome-list {
   list-style: none;
   margin: 0;
   padding: 0;
 }
-.hcard.is-takehome .app-preview-list li {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 11px 16px;
+.hcard.is-takehome .takehome-list li {
   border-bottom: 1px solid var(--line);
-  font-size: 13px;
-  color: var(--ink-2);
 }
-.hcard.is-takehome .app-preview-list li:last-child {
+.hcard.is-takehome .takehome-list li:last-child {
   border-bottom: none;
 }
-.hcard.is-takehome .app-preview-list li svg {
-  color: var(--ink-4);
-  flex-shrink: 0;
-}
-.hcard.is-takehome .app-preview-cta {
+.hcard.is-takehome .takehome-row {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin: 12px 14px 0;
-  padding: 12px 14px;
-  border-radius: 12px;
-  background: var(--red-soft);
-  border: 1px dashed rgba(211, 60, 31, 0.32);
-  color: var(--red-deep);
+  gap: 12px;
+  width: 100%;
+  padding: 12px 16px;
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+  transition: background 0.15s ease;
 }
-.hcard.is-takehome .app-preview-cta .cta-copy {
+.hcard.is-takehome .takehome-row:hover {
+  background: rgba(11, 102, 194, 0.05);
+}
+.hcard.is-takehome .takehome-row:active {
+  background: rgba(11, 102, 194, 0.09);
+}
+.hcard.is-takehome .takehome-row:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: -2px;
+}
+.hcard.is-takehome .th-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--cream-deep);
+  color: var(--ink-3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.hcard.is-takehome .takehome-row:hover .th-icon {
+  background: var(--blue-soft);
+  color: var(--blue-deep);
+}
+.hcard.is-takehome .th-text {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
   min-width: 0;
 }
-.hcard.is-takehome .app-preview-cta .cta-eyebrow {
-  font-family: var(--mono);
-  font-size: 8px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  opacity: 0.78;
-}
-.hcard.is-takehome .app-preview-cta .cta-label {
-  font-size: 14px;
+.hcard.is-takehome .th-label {
+  font-size: 13.5px;
   font-weight: 600;
-  line-height: 1.2;
   color: var(--ink);
+  line-height: 1.3;
 }
-.hcard.is-takehome .app-preview-cta svg {
-  color: var(--red-deep);
+.hcard.is-takehome .th-sub {
+  font-size: 12px;
+  color: var(--ink-3);
+  line-height: 1.4;
+}
+.hcard.is-takehome .th-arrow {
+  color: var(--ink-4);
   flex-shrink: 0;
+  transition: color 0.15s ease, transform 0.15s ease;
 }
-.hcard.is-takehome .takehome-bonus {
+.hcard.is-takehome .takehome-row:hover .th-arrow {
+  color: var(--blue-deep);
+  transform: translateX(2px);
+}
+
+.hcard.is-takehome .aidapt-pitch {
   padding: 14px 16px 16px;
-  margin: 12px 0 0;
   background: var(--cream-deep);
   border-top: 1px solid var(--line);
 }
-.hcard.is-takehome .takehome-bonus .bonus-lbl {
+.hcard.is-takehome .pitch-eyebrow {
   display: block;
   font-family: var(--mono);
   font-size: 9px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--red-deep);
+  color: var(--blue-deep);
   margin-bottom: 6px;
 }
-.hcard.is-takehome .takehome-bonus p {
-  margin: 0;
+.hcard.is-takehome .aidapt-pitch p {
+  margin: 0 0 12px;
   font-size: 13px;
-  line-height: 1.5;
+  line-height: 1.55;
   color: var(--ink-2);
 }
-.hcard.is-takehome .takehome-bonus p strong {
-  color: var(--ink);
-  font-weight: 600;
-}
-.hcard.is-takehome .takehome-meeting-chip {
+.hcard.is-takehome .pitch-cta {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-top: 12px;
+  width: 100%;
   padding: 12px 14px;
   border-radius: 12px;
-  background: var(--paper);
-  border: 1px dashed var(--line-strong);
-}
-.hcard.is-takehome .takehome-meeting-chip.is-ready {
+  background: linear-gradient(145deg, var(--blue) 0%, var(--blue-deep) 100%);
+  border: none;
+  color: #fff;
   cursor: pointer;
-  border-color: rgba(11, 102, 194, 0.35);
-  background: var(--blue-tint);
-  transition: border-color 0.2s, transform 0.2s;
+  text-align: left;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
-.hcard.is-takehome .takehome-meeting-chip.is-ready:hover {
-  border-color: rgba(11, 102, 194, 0.55);
+.hcard.is-takehome .pitch-cta:hover {
   transform: translateY(-1px);
+  box-shadow: 0 10px 22px -14px rgba(11, 102, 194, 0.6);
 }
-.hcard.is-takehome .takehome-meeting-chip.is-pending {
-  opacity: 0.92;
-  cursor: default;
+.hcard.is-takehome .pitch-cta:focus-visible {
+  outline: 2px solid var(--blue-deep);
+  outline-offset: 2px;
 }
-.hcard.is-takehome .takehome-meeting-chip .glyph {
-  width: 34px;
-  height: 34px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  background: var(--cream-deep);
-  color: var(--ink-3);
-  flex-shrink: 0;
-}
-.hcard.is-takehome .takehome-meeting-chip.is-ready .glyph {
-  background: var(--blue-soft);
-  color: var(--blue-deep);
-}
-.hcard.is-takehome .takehome-meeting-chip .info {
+.hcard.is-takehome .pitch-cta-text {
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: 2px;
   min-width: 0;
 }
-.hcard.is-takehome .takehome-meeting-chip .info .a {
+.hcard.is-takehome .pitch-cta-eyebrow {
   font-family: var(--mono);
   font-size: 9px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--ink-4);
+  color: rgba(255, 255, 255, 0.7);
 }
-.hcard.is-takehome .takehome-meeting-chip.is-ready .info .a {
-  color: var(--blue-deep);
+.hcard.is-takehome .pitch-cta-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.3;
 }
-.hcard.is-takehome .takehome-meeting-chip .info .b {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--ink-2);
-  line-height: 1.35;
-}
-.hcard.is-takehome .takehome-meeting-chip.is-ready .info .b {
-  color: var(--ink);
-}
-.hcard.is-takehome .takehome-meeting-chip .go {
+.hcard.is-takehome .pitch-cta-go {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: var(--blue);
-  color: white;
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  transition: transform 0.18s ease, background 0.18s ease;
+}
+.hcard.is-takehome .pitch-cta:hover .pitch-cta-go {
+  background: rgba(255, 255, 255, 0.28);
+  transform: translateX(2px);
 }
 
 /* ─── Aidapt programme card ─── */
@@ -748,5 +634,90 @@
   }
   .hub-divider { grid-column: 1 / -1; }
   .hcard.span-2 { grid-column: 1 / -1; }
+  .compact-card { grid-column: 1 / -1; }
   .hcard .hc-foot { margin-top: auto; }
 }
+
+/* ─── Compact action card (top of hub) ─── */
+.compact-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+.compact-card:hover { transform: translateY(-1px); }
+.compact-card:focus-visible { outline-offset: 2px; }
+.compact-card .cc-glyph {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.compact-card .cc-copy {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.compact-card .cc-eyebrow {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.compact-card .cc-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.3;
+}
+.compact-card .cc-sub {
+  font-size: 12px;
+  color: var(--ink-2);
+  line-height: 1.4;
+}
+.compact-card .cc-go {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.18s ease;
+}
+.compact-card:hover .cc-go { transform: translateX(2px); }
+
+.compact-card.is-red {
+  background: var(--red-tint);
+  border: 1px solid rgba(168, 44, 18, 0.22);
+}
+.compact-card.is-red:hover {
+  border-color: rgba(168, 44, 18, 0.45);
+  box-shadow: 0 10px 22px -14px rgba(168, 44, 18, 0.45);
+}
+.compact-card.is-red:focus-visible { outline: 2px solid var(--red-deep); }
+.compact-card.is-red .cc-glyph { background: var(--red-soft); color: var(--red-deep); }
+.compact-card.is-red .cc-eyebrow { color: var(--red-deep); }
+.compact-card.is-red .cc-go { background: var(--red-deep); }
+
+.compact-card.is-blue {
+  background: var(--blue-tint);
+  border: 1px solid rgba(11, 102, 194, 0.22);
+}
+.compact-card.is-blue:hover {
+  border-color: rgba(11, 102, 194, 0.45);
+  box-shadow: 0 10px 22px -14px rgba(11, 102, 194, 0.45);
+}
+.compact-card.is-blue:focus-visible { outline: 2px solid var(--blue-deep); }
+.compact-card.is-blue .cc-glyph { background: var(--blue-soft); color: var(--blue-deep); }
+.compact-card.is-blue .cc-eyebrow { color: var(--blue-deep); }
+.compact-card.is-blue .cc-go { background: var(--blue-deep); }
