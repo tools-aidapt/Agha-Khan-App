@@ -549,7 +549,7 @@ function ShareCard() {
   return (
     <article className="hcard is-share" onClick={onShare}>
       <div className="hc-head">
-        <span className="hc-num">05 · Share the moment</span>
+        <span className="hc-num">03 · Share the moment</span>
         <span className="hc-pill is-live">● Streaming</span>
       </div>
       <h3>Share this YouTube Live with your family &amp; friends.</h3>
@@ -715,7 +715,7 @@ function TakeHomeAppCard({ onBookDiagnostic }) {
   return (
     <article className="hcard is-takehome span-2" onClick={onOpenResources}>
       <div className="hc-head">
-        <span className="hc-num">05 · Before you leave</span>
+        <span className="hc-num">06 · Before you leave</span>
         <span className="hc-pill is-soon">On your phone</span>
       </div>
       <h3>Take <em>Aidapt</em> home with you.</h3>
@@ -811,7 +811,7 @@ function ClassCard({ onOpen }) {
   return (
     <article className="hcard is-programme span-2" onClick={onOpen}>
       <div className="hc-head">
-        <span className="hc-num">03 · Going deeper</span>
+        <span className="hc-num">04 · Going deeper</span>
         <span className="hc-pill is-soon">Reference</span>
       </div>
       <h3>The 6-session program.</h3>
@@ -846,7 +846,7 @@ function SurveyCard() {
   return (
     <article className="hcard" onClick={onOpen}>
       <div className="hc-head">
-        <span className="hc-num">04 · End of day</span>
+        <span className="hc-num">05 · End of day</span>
         <span className="hc-pill">60 seconds</span>
       </div>
       <h3>Post-event survey.</h3>
@@ -912,6 +912,9 @@ export function SessionsScreen({ data }) {
 
           <Divider label="Before talks start" />
           <SpeakersCard onOpen={() => setSheet('speakers')} />
+
+          <Divider label="During the day" />
+          <ShareCard />
 
           <Divider label="After today" />
           <ClassCard onOpen={() => setSheet('class')} />
