@@ -251,6 +251,7 @@ function CountryPicker({ value, onChange }) {
           alt={current.name}
           width="22"
           height="16"
+          decoding="async"
         />
         <span className="dial">{current.dial}</span>
         <svg className="chev" width="9" height="9" viewBox="0 0 10 10" fill="none">

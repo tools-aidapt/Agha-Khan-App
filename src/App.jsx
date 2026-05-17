@@ -1,7 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { WelcomeScreen } from './screens/ScreenWelcome.jsx';
 import { Step1Personal, Step2Business, Step3Interest, COUNTRIES, DEFAULT_COUNTRY_CODE } from './screens/ScreenForm.jsx';
-import { SessionsScreen, SuccessOverlay } from './screens/ScreenSessions.jsx';
+
+// Module-level import() fires as soon as App.jsx is parsed, so the sessions
+// chunk downloads in parallel with the initial render. Welcome+form paint
+// from a much smaller bundle on mobile, while returning visitors heading
+// straight to /sessions see no regression (the chunk is already in flight).
+const sessionsModule = import('./screens/ScreenSessions.jsx');
+const SessionsScreen = React.lazy(() => sessionsModule.then((m) => ({ default: m.SessionsScreen })));
+const SuccessOverlay = React.lazy(() => sessionsModule.then((m) => ({ default: m.SuccessOverlay })));
 import {
   useTweaks,
   TweaksPanel,
@@ -147,8 +154,10 @@ export default function App() {
           onNext={handleSubmit}
         />
       )}
-      {stage === 'success' && <SuccessOverlay name={data.name} />}
-      {stage === 'sessions' && <SessionsScreen data={data} />}
+      <Suspense fallback={null}>
+        {stage === 'success' && <SuccessOverlay name={data.name} />}
+        {stage === 'sessions' && <SessionsScreen data={data} />}
+      </Suspense>
 
       <Footer />
 

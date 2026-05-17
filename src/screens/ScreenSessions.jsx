@@ -279,7 +279,7 @@ function SpeakersSheet({ open, onClose }) {
           <div className="spkr-hero">
             <div className="av-lg" data-tone={selected.tone}>
               {selected.photo
-                ? <img src={selected.photo} alt={selected.name} />
+                ? <img src={selected.photo} alt={selected.name} loading="lazy" decoding="async" />
                 : initialsOf(selected.name)}
             </div>
             <div className="meta">
@@ -378,7 +378,7 @@ function SpeakersSheet({ open, onClose }) {
             aria-label={`View profile for ${s.name}`}
           >
             <div className="av" data-tone={s.tone}>
-              {s.photo ? <img src={s.photo} alt="" /> : initialsOf(s.name)}
+              {s.photo ? <img src={s.photo} alt="" loading="lazy" decoding="async" /> : initialsOf(s.name)}
             </div>
             <div className="body">
               <div className="row1">
@@ -452,6 +452,36 @@ function AgendaSheet({ open, onClose }) {
           ))}
         </div>
       </div>
+    </Sheet>
+  );
+}
+
+function DiagnosticBookingSheet({ open, onClose }) {
+  useEffect(() => {
+    if (!open) return;
+    if (document.querySelector('script[data-clickup-forms-embed]')) return;
+    const script = document.createElement('script');
+    script.src = CLICKUP_EMBED_SCRIPT;
+    script.async = true;
+    script.setAttribute('data-clickup-forms-embed', 'true');
+    document.body.appendChild(script);
+  }, [open]);
+
+  return (
+    <Sheet open={open} onClose={onClose} eyebrow="Bonus · For business leaders" title={<>AI Readiness <em>Diagnostic.</em></>}>
+      <p style={{ fontSize: 14, color: 'var(--ink-2)', margin: '4px 0 16px', lineHeight: 1.55 }}>
+        60 minutes. A 90-day roadmap you can act on. No pitch. Fill in the form and we&rsquo;ll be in touch to schedule.
+      </p>
+      <iframe
+        className="clickup-embed clickup-dynamic-height"
+        src={DIAGNOSTIC_FORM_URL}
+        width="100%"
+        height="640"
+        loading="lazy"
+        onWheel={() => {}}
+        title="AI Readiness Diagnostic booking form"
+        style={{ background: 'transparent', border: '1px solid var(--line)', borderRadius: 12, display: 'block' }}
+      />
     </Sheet>
   );
 }
@@ -565,7 +595,8 @@ function ShareCard() {
 
 const SIGNUP_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScyvlU9W4q22FKS-QiQzNiSuMvQ7weNcIphVb9sU1bxtQTgKA/viewform';
 const AIDAPT_HOME_URL = 'https://www.aidapt.co';
-const DIAGNOSTIC_BOOKING_URL = 'https://booknow.aidapt.co/#/AI-Diagnostic-Session';
+const DIAGNOSTIC_FORM_URL = 'https://forms.clickup.com/9012897228/p/f/8ckbtec-175572/W18MURNSB3BHK8CI26/form';
+const CLICKUP_EMBED_SCRIPT = 'https://app-cdn.clickup.com/assets/js/forms-embed/v1.js';
 
 const TAKEHOME_RESOURCES = [
   {
@@ -606,15 +637,14 @@ const TAKEHOME_RESOURCES = [
   },
 ];
 
-function CompactCard({ tone, href, ariaLabel, eyebrow, title, sub, glyph }) {
-  const onOpen = () => window.open(href, '_blank', 'noopener,noreferrer');
-  const onKey = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpen(); } };
+function CompactCard({ tone, onClick, ariaLabel, eyebrow, title, sub, glyph }) {
+  const onKey = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick?.(); } };
   return (
     <div
       className={`compact-card is-${tone}`}
-      role="link"
+      role="button"
       tabIndex={0}
-      onClick={onOpen}
+      onClick={onClick}
       onKeyDown={onKey}
       aria-label={ariaLabel}
     >
@@ -634,10 +664,11 @@ function CompactCard({ tone, href, ariaLabel, eyebrow, title, sub, glyph }) {
 }
 
 function SignUpCard() {
+  const onClick = () => window.open(SIGNUP_FORM_URL, '_blank', 'noopener,noreferrer');
   return (
     <CompactCard
       tone="blue"
-      href={SIGNUP_FORM_URL}
+      onClick={onClick}
       ariaLabel="Sign up for your breakout sessions"
       eyebrow="Action needed · Do this first"
       title="Sign up for the session if you haven't already"
@@ -652,12 +683,12 @@ function SignUpCard() {
   );
 }
 
-function DiagnosticCard() {
+function DiagnosticCard({ onOpen }) {
   return (
     <CompactCard
       tone="red"
-      href={DIAGNOSTIC_BOOKING_URL}
-      ariaLabel="Book your free 60-minute AI Diagnostic Session"
+      onClick={onOpen}
+      ariaLabel="Book your AI Readiness Diagnostic"
       eyebrow="Bonus · For business leaders"
       title="AI Readiness Diagnostic"
       sub="60 minutes. A 90-day roadmap you can act on. No pitch."
@@ -671,11 +702,15 @@ function DiagnosticCard() {
   );
 }
 
-function TakeHomeAppCard() {
+function TakeHomeAppCard({ onBookDiagnostic }) {
   const onOpenResources = () => window.open(AIDAPT_HOME_URL, '_blank', 'noopener,noreferrer');
   const openLink = (e, href) => {
     e.stopPropagation();
     window.open(href, '_blank', 'noopener,noreferrer');
+  };
+  const openDiagnostic = (e) => {
+    e.stopPropagation();
+    onBookDiagnostic?.();
   };
   return (
     <article className="hcard is-takehome span-2" onClick={onOpenResources}>
@@ -723,7 +758,7 @@ function TakeHomeAppCard() {
           <button
             type="button"
             className="pitch-cta"
-            onClick={(e) => openLink(e, DIAGNOSTIC_BOOKING_URL)}
+            onClick={openDiagnostic}
           >
             <span className="pitch-cta-text">
               <span className="pitch-cta-eyebrow">Start here</span>
@@ -759,7 +794,7 @@ function SpeakersCard({ onOpen }) {
       <div className="speaker-row">
         {visible.map((s) => (
           <div key={s.name} className="av" data-tone={s.tone} title={s.name}>
-            {s.photo ? <img src={s.photo} alt="" /> : initialsOf(s.name)}
+            {s.photo ? <img src={s.photo} alt="" loading="lazy" decoding="async" /> : initialsOf(s.name)}
           </div>
         ))}
         {speakers.length > 5 && <div className="av" data-tone="cream">+{speakers.length - 5}</div>}
@@ -836,7 +871,7 @@ function formatNairobiTime() {
 
 export function SessionsScreen({ data }) {
   const [loading, setLoading] = useState(true);
-  const [sheet, setSheet] = useState(null); // 'speakers' | 'class' | 'agenda' | null
+  const [sheet, setSheet] = useState(null); // 'speakers' | 'class' | 'agenda' | 'diagnostic' | null
   const [nairobiTime, setNairobiTime] = useState(formatNairobiTime);
 
   useEffect(() => {
@@ -869,7 +904,7 @@ export function SessionsScreen({ data }) {
         <HubSkeleton />
       ) : (
         <div className="hub stagger">
-          <DiagnosticCard />
+          <DiagnosticCard onOpen={() => setSheet('diagnostic')} />
           <SignUpCard />
 
           <Divider label={`Right now · ${nairobiTime}`} isNow />
@@ -884,13 +919,14 @@ export function SessionsScreen({ data }) {
           <Divider label="Later this week" />
           <SurveyCard />
 
-          <TakeHomeAppCard />
+          <TakeHomeAppCard onBookDiagnostic={() => setSheet('diagnostic')} />
         </div>
       )}
 
       <SpeakersSheet open={sheet === 'speakers'} onClose={() => setSheet(null)} />
       <ClassDetailsSheet open={sheet === 'class'} onClose={() => setSheet(null)} />
       <AgendaSheet open={sheet === 'agenda'} onClose={() => setSheet(null)} />
+      <DiagnosticBookingSheet open={sheet === 'diagnostic'} onClose={() => setSheet(null)} />
     </React.Fragment>
   );
 }

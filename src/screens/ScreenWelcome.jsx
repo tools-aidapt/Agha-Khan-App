@@ -96,6 +96,7 @@ export function WelcomeScreen({ onBegin }) {
             className="organiser-logo"
             src={ismailiCivicLogo}
             alt="Ismaili Civic Kenya"
+            decoding="async"
           />
         </div>
       )}

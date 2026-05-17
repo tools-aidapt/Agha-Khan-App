@@ -13,7 +13,7 @@ export function Footer() {
           rel="noopener noreferrer"
           aria-label="Aidapt — opens in a new tab"
         >
-          <img src={logoUrl} alt="Aidapt" />
+          <img src={logoUrl} alt="Aidapt" loading="lazy" decoding="async" />
         </a>
       </div>
     </footer>
